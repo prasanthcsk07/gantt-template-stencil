@@ -9,3 +9,62 @@ www/
 dist/
 build/
 .tmp/
+
+# TypeScript
+*.tsbuildinfo
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# MacOS
+.DS_Store
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local environment variables
+.env
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Coverage
+coverage
+*.lcov
+
+# Lock files
+package-lock.json
+yarn.lock
+
+# Temporary files
+temp
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.orig
+
+# Stencil component library build artifacts
+.stencil
+.stencil-staging
+
+# Stencil telemetry
+.stencil-telemetry
