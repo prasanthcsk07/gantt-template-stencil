@@ -1,6 +1,4 @@
-@import url('https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css');
-
-
+@import '~dhtmlx-gantt/codebase/dhtmlxgantt.css';
 
 
 #skeleton_loader {
