@@ -13,6 +13,16 @@ export class MyGentt {
   @Element() el: HTMLElement;
   @State() isLoading: boolean = false;
 
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
   componentDidLoad() {
     gantt.config.xml_date = "%Y-%m-%d %H:%i";
     gantt.init(this.el.shadowRoot.querySelector('#gantt_here'));
@@ -56,6 +66,26 @@ export class MyGentt {
       gantt.parse(task);
       this.isLoading = false;
     }, 2000);
+
+
+    
+   gantt.attachEvent("onAfterTaskAdd", (id, task) => {
+    let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date),open:true,id:String(id)}
+    axios.post("http://localhost:8000/chart",newData).then(res=>console.log("successfully post data")).catch(err=>console.log("Error in post"))
+  });
+
+
+
+  gantt.attachEvent("onAfterTaskUpdate", (id, task) => {
+    // console.log(`Task updated: ${id}`, task);
+    let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date),open:true,id:String(id)}
+    axios.put(`http://localhost:8000/chart/${id}`,newData).then(res=>console.log(id,"Data Successfully Updated")).catch(err=>console.log(err,"Error"))
+  });
+
+
+  gantt.attachEvent("onAfterTaskDelete", (id) => {
+    axios.delete(`http://localhost:8000/chart/${id}`).then(res=>console.log(`${id}-Deleted Successfully`)).catch(err=>console.log(err))
+  });
   }
 
   render() {

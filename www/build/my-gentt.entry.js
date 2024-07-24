@@ -3804,6 +3804,14 @@ const MyGentt = class {
         registerInstance(this, hostRef);
         this.isLoading = false;
     }
+    formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
     componentDidLoad() {
         gantt.config.xml_date = "%Y-%m-%d %H:%i";
         gantt.init(this.el.shadowRoot.querySelector('#gantt_here'));
@@ -3829,9 +3837,21 @@ const MyGentt = class {
             gantt.parse(task);
             this.isLoading = false;
         }, 2000);
+        gantt.attachEvent("onAfterTaskAdd", (id, task) => {
+            let newData = Object.assign(Object.assign({}, task), { end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) });
+            axios.post("http://localhost:8000/chart", newData).then(res => console.log("successfully post data")).catch(err => console.log("Error in post"));
+        });
+        gantt.attachEvent("onAfterTaskUpdate", (id, task) => {
+            // console.log(`Task updated: ${id}`, task);
+            let newData = Object.assign(Object.assign({}, task), { end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) });
+            axios.put(`http://localhost:8000/chart/${id}`, newData).then(res => console.log(id, "Data Successfully Updated")).catch(err => console.log(err, "Error"));
+        });
+        gantt.attachEvent("onAfterTaskDelete", (id) => {
+            axios.delete(`http://localhost:8000/chart/${id}`).then(res => console.log(`${id}-Deleted Successfully`)).catch(err => console.log(err));
+        });
     }
     render() {
-        return (h("div", { key: '0a6385a825d6ec323ddc71dfa1e247f05f0561f8', style: { position: "relative" } }, this.isLoading && h("div", { key: '245ac24517a00bf444e83137f37ff2972cc18c6b', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: '3edebf5f36013a86e2c6e3a0e09165c3224ef7cd', id: "gantt_here", style: { width: '100%', height: '500px' } })));
+        return (h("div", { key: '2d362444613768fb7167ac457336b03a34c093ba', style: { position: "relative" } }, this.isLoading && h("div", { key: '60a75412d290e47aff77da838f028e0164ea9660', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: '74a879f2ca26f395ac43710dbf2417ddfdd7258d', id: "gantt_here", style: { width: '100%', height: '500px' } })));
     }
     get el() { return getElement(this); }
 };
