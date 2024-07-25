@@ -1,4 +1,4 @@
-import { Component, h, Element, State } from '@stencil/core';
+import { Component, h, Element, State, Prop, Method } from '@stencil/core';
 import axios from 'axios';
 import 'dhtmlx-gantt'; // Importing the npm package
 
@@ -12,7 +12,6 @@ declare const gantt: any;
 export class MyGentt {
   @Element() el: HTMLElement;
   @State() isLoading: boolean = false;
-
 
   private formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -98,13 +97,15 @@ export class MyGentt {
   });
 
   }
-
   render() {
     return (
+      <div>
       <div style={{position:"relative"}}>
         {this.isLoading && <div style={{position:"absolute",top:"0",left:"0",right:"0",bottom:"0",width:"100%",height:"100%",zIndex:"999"}} id="skeleton_loader"></div>}
         <div id="gantt_here" style={{ width: '100%', height: '500px' }}></div>
       </div>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, quos asperiores inventore repellat iusto voluptatibus accusantium cupiditate in ipsa unde quasi, quo omnis molestias fugiat neque iste recusandae atque optio!</p>
+        </div>
     );
   }
 }

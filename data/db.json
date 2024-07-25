@@ -49,8 +49,26 @@
       "text": "Project #3",
       "start_date": "2024-07-01 00:00",
       "duration": 10,
-      "progress": 0.4,
-      "open": true
+      "progress": 0.78,
+      "open": true,
+      "end_date": "",
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "3"
+      ],
+      "$target": [],
+      "parent": 0,
+      "$rendered_parent": 0,
+      "$level": 0,
+      "$local_index": 1,
+      "$open": true,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 3
     },
     {
       "id": "5",
@@ -65,32 +83,28 @@
       "text": "Task #2",
       "start_date": "2024-07-12 00:00",
       "duration": 8,
-      "progress": 0.6,
-      "parent": 4
-    },
-    {
-      "id": "1721835727001",
-      "start_date": "2024-07-05 00:00",
-      "text": "Project #5",
-      "duration": 5,
-      "$resourceAssignments": [],
+      "progress": 0.7714285714285715,
+      "parent": 4,
       "end_date": "",
-      "progress": 0.38571428571428573,
       "$no_start": false,
       "$no_end": false,
       "$rendered_type": "task",
       "$calculate_duration": true,
       "$effective_calendar": "global",
-      "$source": [],
-      "$target": [],
-      "parent": 0,
-      "$rendered_parent": 0,
-      "$level": 0,
+      "$source": [
+        "d050"
+      ],
+      "$target": [
+        "4"
+      ],
+      "$rendered_parent": 4,
+      "$level": 1,
+      "$local_index": 1,
+      "$open": false,
       "$expanded_branch": true,
-      "$index": 6,
-      "$local_index": 2,
-      "open": true,
-      "$open": true
+      "$resourceAssignments": [],
+      "$index": 5,
+      "open": true
     }
   ],
   "links": [
@@ -116,6 +130,18 @@
       "id": "4",
       "source": 5,
       "target": 6,
+      "type": "0"
+    },
+    {
+      "id": "d050",
+      "source": "6",
+      "target": "1721835727001",
+      "type": "1"
+    },
+    {
+      "id": "8d72",
+      "source": "1721835727001",
+      "target": "5",
       "type": "0"
     }
   ]
