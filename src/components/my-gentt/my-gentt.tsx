@@ -86,6 +86,17 @@ export class MyGentt {
   gantt.attachEvent("onAfterTaskDelete", (id) => {
     axios.delete(`http://localhost:8000/chart/${id}`).then(res=>console.log(`${id}-Deleted Successfully`)).catch(err=>console.log(err))
   });
+
+  gantt.attachEvent("onLinkCreated", (link) => {
+    axios.post("http://localhost:8000/links",link).then(res=>console.log('Link created:', link)).catch(err=>console.log("Error in post Link"))
+    return true; // Return true to confirm the link creation
+  });
+  
+  gantt.attachEvent('onAfterLinkDelete', (id, link) => {
+    axios.delete(`http://localhost:8000/links/${id}`).then(res=>console.log(`${id}-Deleted Link Successfully`)).catch(err=>console.log(err))
+    return true; // Return true to confirm the link deletion
+  });
+
   }
 
   render() {

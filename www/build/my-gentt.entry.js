@@ -3849,9 +3849,17 @@ const MyGentt = class {
         gantt.attachEvent("onAfterTaskDelete", (id) => {
             axios.delete(`http://localhost:8000/chart/${id}`).then(res => console.log(`${id}-Deleted Successfully`)).catch(err => console.log(err));
         });
+        gantt.attachEvent("onLinkCreated", (link) => {
+            axios.post("http://localhost:8000/links", link).then(res => console.log('Link created:', link)).catch(err => console.log("Error in post Link"));
+            return true; // Return true to confirm the link creation
+        });
+        gantt.attachEvent('onAfterLinkDelete', (id, link) => {
+            axios.delete(`http://localhost:8000/links/${id}`).then(res => console.log(`${id}-Deleted Link Successfully`)).catch(err => console.log(err));
+            return true; // Return true to confirm the link deletion
+        });
     }
     render() {
-        return (h("div", { key: '2d362444613768fb7167ac457336b03a34c093ba', style: { position: "relative" } }, this.isLoading && h("div", { key: '60a75412d290e47aff77da838f028e0164ea9660', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: '74a879f2ca26f395ac43710dbf2417ddfdd7258d', id: "gantt_here", style: { width: '100%', height: '500px' } })));
+        return (h("div", { key: '12184e23544d3308ec17a443083da36028d24a0e', style: { position: "relative" } }, this.isLoading && h("div", { key: '2204faa2352abd2753973cb55e8f6bf52a1df94c', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: '0834f919c797a6d9b0e5dd7b63b2dad12f5ec6bf', id: "gantt_here", style: { width: '100%', height: '500px' } })));
     }
     get el() { return getElement(this); }
 };
