@@ -3,10 +3,28 @@
     {
       "id": "1",
       "text": "Project #2",
-      "start_date": "2024-07-01 00:00",
+      "start_date": "2024-07-03 00:00",
       "duration": 10,
-      "progress": 0.4,
-      "open": true
+      "progress": 0.7757142857142857,
+      "open": true,
+      "end_date": "",
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "1"
+      ],
+      "$target": [],
+      "parent": 0,
+      "$rendered_parent": 0,
+      "$level": 0,
+      "$local_index": 0,
+      "$open": true,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 0
     },
     {
       "id": "2",
@@ -47,9 +65,9 @@
     {
       "id": "4",
       "text": "Project #3",
-      "start_date": "2024-07-01 00:00",
+      "start_date": "2024-07-05 00:00",
       "duration": 10,
-      "progress": 0.78,
+      "progress": 0.6071428571428571,
       "open": true,
       "end_date": "",
       "$no_start": false,
@@ -73,17 +91,38 @@
     {
       "id": "5",
       "text": "Task #1",
-      "start_date": "2024-07-08 00:00",
+      "start_date": "2024-07-06 00:00",
       "duration": 8,
-      "progress": 0.9,
-      "parent": 4
+      "progress": 0.3892857142857143,
+      "parent": 4,
+      "end_date": "",
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "4"
+      ],
+      "$target": [
+        "3",
+        "8d72"
+      ],
+      "$rendered_parent": 4,
+      "$level": 1,
+      "$local_index": 0,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 4,
+      "open": true
     },
     {
       "id": "6",
       "text": "Task #2",
-      "start_date": "2024-07-12 00:00",
+      "start_date": "2024-07-07 00:00",
       "duration": 8,
-      "progress": 0.7714285714285715,
+      "progress": 0.9517857142857142,
       "parent": 4,
       "end_date": "",
       "$no_start": false,
@@ -105,6 +144,32 @@
       "$resourceAssignments": [],
       "$index": 5,
       "open": true
+    },
+    {
+      "id": "1721988318585",
+      "start_date": "2024-07-03 00:00",
+      "text": "Project #Gantt",
+      "duration": 7,
+      "$resourceAssignments": [],
+      "end_date": "",
+      "progress": 0.36122448979591837,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "7f50"
+      ],
+      "$target": [],
+      "parent": 0,
+      "$rendered_parent": 0,
+      "$level": 0,
+      "$expanded_branch": true,
+      "$index": 6,
+      "$local_index": 2,
+      "open": true,
+      "$open": true
     }
   ],
   "links": [
@@ -143,6 +208,12 @@
       "source": "1721835727001",
       "target": "5",
       "type": "0"
+    },
+    {
+      "id": "7f50",
+      "source": "1721988318585",
+      "target": "6",
+      "type": "2"
     }
   ]
 }

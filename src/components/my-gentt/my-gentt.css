@@ -10,8 +10,7 @@
   }
   
 
-  :host([successColor]) .gantt_task_line {
-    /* left: 0; */
+  /* :host([successColor]) .gantt_task_line {
     background-color: rgb(156, 216, 169) !important;
   }
 
@@ -21,7 +20,6 @@
   
 
   :host([dangerColor]) .gantt_task_line {
-    /* left: 0; */
     background-color: rgb(216, 156, 156) !important;
   }
 
@@ -29,13 +27,57 @@
     background-color: rgb(167, 47, 7) !important;
   }
   :host([primaryColor]) .gantt_task_line {
-    /* left: 0; */
     background-color: rgb(216, 214, 156) !important;
   }
 
   :host([primaryColor]) .gantt_task_progress {
     background-color: rgb(162, 167, 7) !important;
+  } */
+
+
+  /* .task-yellow .gantt_task_line {
+    background-color: yellow !important;
+    border-color: yellow !important;
   }
+  
+  .task-green .gantt_task_line {
+    background-color: green !important;
+    border-color: green !important;
+  } */
+  
+
+
+  .task-yellow  {
+    background-color: rgb(180, 180, 101) !important;
+    border-color: yellow !important;
+  }
+  .task-red  {
+    background-color: rgb(180, 101, 101) !important;
+    border-color: rgb(255, 51, 0) !important;
+  }
+  
+  .task-green  {
+    background-color: rgb(109, 180, 101) !important;
+    border-color: green !important;
+  }
+
+
+  
+  .task-yellow-progress  {
+    background-color: yellow !important;
+    border-color: yellow !important;
+  }
+  
+  .task-red-progress  {
+    background-color: rgb(255, 0, 0) !important;
+    border-color: rgb(255, 0, 0) !important;
+  }
+  
+  .task-green-progress  {
+    background-color:green !important;
+    border-color: green !important;
+  }
+  
   
   @keyframes loading {
     0% {

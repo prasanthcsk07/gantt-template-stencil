@@ -1,8 +1,8 @@
-import { Component, h, Element, State, Prop, Method } from '@stencil/core';
+import { Component, h, Element, State } from '@stencil/core';
 import axios from 'axios';
 import 'dhtmlx-gantt'; // Importing the npm package
 
-declare const gantt: any; 
+declare const gantt: any;
 
 @Component({
   tag: 'my-gentt',
@@ -20,6 +20,28 @@ export class MyGentt {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${year}-${month}-${day} ${hours}:${minutes}`;
+  }
+
+
+  applyTaskStyles() {
+    const tasks = gantt.getTaskByTime(); // Get all tasks
+    tasks.forEach((task) => {
+      const taskElement = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress_wrapper`);
+      const taskElement2 = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress`);
+      console.log(taskElement)
+      if (taskElement) {
+        if (task.progress < 0.5 && task.progress > 0.2) {
+          taskElement.classList.add('task-yellow');
+          taskElement2.classList.add('task-yellow-progress');
+        } else if(task.progress > 0.5) {
+          taskElement.classList.add('task-green');
+          taskElement2.classList.add('task-green-progress');
+        } else if(task.progress < 0.2){
+          taskElement.classList.add('task-red');
+          taskElement2.classList.add('task-red-progress');
+        }
+      }
+    });
   }
 
   componentDidLoad() {
@@ -47,9 +69,13 @@ export class MyGentt {
       .then(response => response.data)
       .then(res => {
         task.data = res;
+        gantt.parse(task);
+        this.isLoading = false;
+          this.applyTaskStyles(); 
       })
       .catch(error => {
         console.error('Error fetching chart:', error);
+        this.isLoading = false;
       });
 
     axios.get<LinksData>("http://localhost:8000/links")
@@ -61,51 +87,65 @@ export class MyGentt {
         console.error('Error fetching links:', error);
       });
 
-    setTimeout(() => {
-      gantt.parse(task);
-      this.isLoading = false;
-    }, 2000);
+    gantt.attachEvent("onAfterTaskAdd", (id, task) => {
+      let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date), open: true, id: String(id)};
+      axios.post("http://localhost:8000/chart", newData)
+        .then(() => {
+          console.log("Successfully posted data")
+          this.applyTaskStyles(); 
+        })
+        .catch(err => console.log("Error in post", err));
+    });
 
+    gantt.attachEvent("onAfterTaskUpdate", (id, task) => {
+      let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date), open: true, id: String(id)};
+      axios.put(`http://localhost:8000/chart/${id}`, newData)
+        .then(() => {
+          console.log(id, "Data successfully updated")
+          this.applyTaskStyles(); 
+        })
+        .catch(err => console.log("Error", err));
+    });
 
-    
-   gantt.attachEvent("onAfterTaskAdd", (id, task) => {
-    let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date),open:true,id:String(id)}
-    axios.post("http://localhost:8000/chart",newData).then(res=>console.log("successfully post data")).catch(err=>console.log("Error in post"))
-  });
+    gantt.attachEvent("onAfterTaskDelete", (id) => {
+      axios.delete(`http://localhost:8000/chart/${id}`)
+        .then(() =>{
+           console.log(`${id} - Deleted successfully`)
+           this.applyTaskStyles(); 
+          })
+        .catch(err => console.log("Error", err));
+    });
 
+    gantt.attachEvent("onLinkCreated", (link) => {
+      axios.post("http://localhost:8000/links", link)
+        .then(() => console.log('Link created:', link))
+        .catch(err => console.log("Error in post link", err));
+      return true; // Return true to confirm the link creation
+    });
 
+    gantt.attachEvent('onAfterLinkDelete', (id, link) => {
+      axios.delete(`http://localhost:8000/links/${id}`)
+        .then(() => console.log(`${id} - Deleted link successfully`))
+        .catch(err => console.log("Error", err));
+      return true; // Return true to confirm the link deletion
+    });
 
-  gantt.attachEvent("onAfterTaskUpdate", (id, task) => {
-    // console.log(`Task updated: ${id}`, task);
-    let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date),open:true,id:String(id)}
-    axios.put(`http://localhost:8000/chart/${id}`,newData).then(res=>console.log(id,"Data Successfully Updated")).catch(err=>console.log(err,"Error"))
-  });
-
-
-  gantt.attachEvent("onAfterTaskDelete", (id) => {
-    axios.delete(`http://localhost:8000/chart/${id}`).then(res=>console.log(`${id}-Deleted Successfully`)).catch(err=>console.log(err))
-  });
-
-  gantt.attachEvent("onLinkCreated", (link) => {
-    axios.post("http://localhost:8000/links",link).then(res=>console.log('Link created:', link)).catch(err=>console.log("Error in post Link"))
-    return true; // Return true to confirm the link creation
-  });
-  
-  gantt.attachEvent('onAfterLinkDelete', (id, link) => {
-    axios.delete(`http://localhost:8000/links/${id}`).then(res=>console.log(`${id}-Deleted Link Successfully`)).catch(err=>console.log(err))
-    return true; // Return true to confirm the link deletion
-  });
-
+    // gantt.attachEvent("onTaskClick", (id) => {
+    //   this.applyTaskStyles(); 
+    //   return id
+    // });
   }
+
+
   render() {
     return (
       <div>
-      <div style={{position:"relative"}}>
-        {this.isLoading && <div style={{position:"absolute",top:"0",left:"0",right:"0",bottom:"0",width:"100%",height:"100%",zIndex:"999"}} id="skeleton_loader"></div>}
-        <div id="gantt_here" style={{ width: '100%', height: '500px' }}></div>
-      </div>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, quos asperiores inventore repellat iusto voluptatibus accusantium cupiditate in ipsa unde quasi, quo omnis molestias fugiat neque iste recusandae atque optio!</p>
+        <div style={{ position: "relative" }}>
+          {this.isLoading && <div style={{ position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }} id="skeleton_loader"></div>}
+          <div id="gantt_here" style={{ width: '100%', height: '500px' }}></div>
         </div>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, quos asperiores inventore repellat iusto voluptatibus accusantium cupiditate in ipsa unde quasi, quo omnis molestias fugiat neque iste recusandae atque optio!</p>
+      </div>
     );
   }
 }
