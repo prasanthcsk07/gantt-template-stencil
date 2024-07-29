@@ -1,0 +1,43 @@
+/* -------------------------------------------------------------------------- */
+/*                          Button custom properties                          */
+/* -------------------------------------------------------------------------- */
+
+:host {
+  /**
+   * @prop --mnc-button--border-color - Button border color
+   * @prop --mnc-button--border-radius - Button border radius
+   * @prop --mnc-button--border-style - Button border style
+   * @prop --mnc-button--border-width - Button border width
+   * @prop --mnc-button--small-height - Button small height
+   * @prop --mnc-button--small-paddingX - Button small padding X
+   * @prop --mnc-button--small-paddingY - Button small padding Y
+   * @prop --mnc-button--small-font-size - Button small font size
+   * @prop --mnc-button--medium-height - Button medium height
+   * @prop --mnc-button--medium-paddingX - Button medium padding X
+   * @prop --mnc-button--medium-paddingY - Button medium padding Y
+   * @prop --mnc-button--medium-font-size - Button medium font size
+   * @prop --mnc-button--large-height - Button large height
+   * @prop --mnc-button--large-paddingX - Button large padding X
+   * @prop --mnc-button--large-paddingY - Button large padding Y
+   * @prop --mnc-button--large-font-size - Button large font size
+   */
+  --mnc-button--border-color: theme(colors.transparent);
+  --mnc-button--border-radius: theme(borderRadius.m);
+  --mnc-button--border-style: solid;
+  --mnc-button--border-width: theme(borderWidth.0);
+
+  --mnc-button--small-height: 32px;
+  --mnc-button--small-paddingX: theme(spacing.xs);
+  --mnc-button--small-paddingY: theme(spacing.xs2);
+  --mnc-button--small-font-size: theme(fontSize.m);
+
+  --mnc-button--medium-height: 48px;
+  --mnc-button--medium-paddingX: theme(spacing.m);
+  --mnc-button--medium-paddingY: theme(spacing.s);
+  --mnc-button--medium-font-size: theme(fontSize.m);
+
+  --mnc-button--large-height: 56px;
+  --mnc-button--large-paddingX: theme(spacing.l);
+  --mnc-button--large-paddingY: theme(spacing.m);
+  --mnc-button--large-font-size: theme(fontSize.m);
+}

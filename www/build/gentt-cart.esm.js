@@ -1,5 +1,5 @@
-import { B as BUILD, c as consoleDevInfo, H, d as doc, N as NAMESPACE, p as promiseResolve, b as bootstrapLazy } from './index-efa75c26.js';
-export { s as setNonce } from './index-efa75c26.js';
+import { B as BUILD, c as consoleDevInfo, H, d as doc, N as NAMESPACE, p as promiseResolve, b as bootstrapLazy } from './index-75ab5b52.js';
+export { s as setNonce } from './index-75ab5b52.js';
 import { g as globalScripts } from './app-globals-0f993ce5.js';
 
 /*
@@ -43,7 +43,7 @@ var patchCloneNodeFix = (HTMLElementPrototype) => {
 
 patchBrowser().then(async (options) => {
   await globalScripts();
-  return bootstrapLazy([["my-gantt",[[1,"my-gantt",{"taskdata":[16],"gZoomIn":[64],"gZoomOut":[64],"updateCriticalPath":[64]}]]]], options);
+  return bootstrapLazy([["mnc-button",[[1,"mnc-button",{"appearance":[513],"block":[516],"border":[513],"disabled":[4],"download":[1],"href":[513],"justifyContent":[513,"justify-content"],"loading":[4],"size":[513],"target":[513],"type":[513],"variant":[513],"hasPrefix":[32],"hasSuffix":[32]},null,{"appearance":["checkPropValues"],"type":["checkPropValues"],"size":["checkPropValues"],"variant":["checkPropValues"]}]]],["my-gantt",[[1,"my-gantt",{"taskdata":[16],"gZoomIn":[64],"gZoomOut":[64],"updateCriticalPath":[64]}]]]], options);
 });
 
 //# sourceMappingURL=gentt-cart.esm.js.map

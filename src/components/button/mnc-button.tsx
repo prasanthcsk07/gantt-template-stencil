@@ -1,0 +1,239 @@
+import { Component, Element, Event, EventEmitter, h, Host, Prop, State, Watch } from '@stencil/core';
+
+import {
+  BUTTON_APPEARANCE,
+  BUTTON_SIZE,
+  BUTTON_TYPE,
+  BUTTON_VARIANT,
+  TButtonAppearance,
+  TButtonBorderRadius,
+  TButtonSize,
+  TButtonType,
+  TButtonVariant,
+} from './mnc-button.types';
+import { hasSlotContent, isDefined, isNil, validatePropValue } from '../../utils';
+
+/**
+ * Buttons are designed for users to take action on a page or a screen.
+ *
+ * @part button - The `<a>` or `<button>` HTML element used under the hood.
+ * @part prefix - The `<span>` tag element that acts as prefix container.
+ * @part label - The `<span>` tag element that renders the text of the button.
+ * @part suffix - The `<span>` tag element that acts as suffix container.
+ */
+@Component({
+  tag: 'mnc-button',
+  styleUrl: './scss/mnc-button.scss',
+  shadow: true,
+})
+export class Mncbutton {
+  // Own Properties
+  // ====================
+
+  private prefixElem: HTMLElement;
+  private suffixElem: HTMLElement;
+
+  // Reference to host HTML element
+  // ===================================
+
+  @Element() el!: HTMLMncButtonElement;
+
+  // State() variables
+  // Inlined decorator, alphabetical order
+  // =======================================
+
+  @State() private hasPrefix = false;
+  @State() private hasSuffix = false;
+
+  // Public Property API
+  // ========================
+
+  /** The appearance style to apply to the button */
+  @Prop({ reflect: true }) appearance: TButtonAppearance = 'primary';
+
+  /** If `true`, it will make the button fit to its parent width. */
+  @Prop({ reflect: true }) block: boolean = false;
+
+  /** The corner radius of the button */
+  @Prop({ reflect: true }) border: TButtonBorderRadius = 'm';
+
+  /** If true, the button will be disabled (no interaction allowed) */
+  @Prop() disabled = false;
+
+  /**
+   * Tells the browser to treat the linked URL as a download. Only used when `href` is set.
+   * Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download
+   */
+  @Prop() download?: string;
+
+  /** When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>` */
+  @Prop({ reflect: true }) href: string;
+
+  /** It determinate how the content should be aligned */
+  @Prop({ reflect: true }) justifyContent: 'left' | 'center' | 'right' = 'center';
+
+  /** If `true` it will display the button in a loading state */
+  @Prop() loading = false;
+
+  /** The size of the button */
+  @Prop({ reflect: true }) size: TButtonSize = 'medium';
+
+  /**
+   * Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`)
+   * Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
+   */
+  @Prop({ reflect: true }) target: '_blank' | '_parent' | '_self' | '_top';
+
+  /** The default behavior of the button */
+  @Prop({ reflect: true }) type: TButtonType = 'button';
+
+  /** The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`) */
+  @Prop({ reflect: true }) variant: TButtonVariant = 'standard';
+
+  // Prop lifecycle events
+  // =======================
+
+  @Watch('appearance')
+  @Watch('type')
+  @Watch('size')
+  @Watch('variant')
+  checkPropValues() {
+    validatePropValue(BUTTON_APPEARANCE, 'primary', this.el, 'appearance');
+    validatePropValue(BUTTON_TYPE, 'button', this.el, 'type');
+    validatePropValue(BUTTON_SIZE, 'medium', this.el, 'size');
+    validatePropValue(BUTTON_VARIANT, 'standard', this.el, 'variant');
+  }
+
+  // Events section
+  // Requires JSDocs for public API documentation
+  // ==============================================
+
+  /** Handler to be called when the button loses focus */
+  @Event() mncBlur: EventEmitter<HTMLMncButtonElement>;
+
+  /** Handler to be called when the button is clicked */
+  @Event() mncFocus: EventEmitter<HTMLMncButtonElement>;
+
+  /** Handler to be called when button gets focus */
+  @Event() mncClick: EventEmitter<HTMLMncButtonElement>;
+
+  // Component lifecycle events
+  // Ordered by their natural call order
+  // =====================================
+
+  componentWillLoad() {
+    this.checkPropValues();
+  }
+
+  // Listeners
+  // ==============
+
+  // Public methods API
+  // These methods are exposed on the host element.
+  // Always use two lines.
+  // Public Methods must be async.
+  // Requires JSDocs for public API documentation.
+  // ===============================================
+
+  // Local methods
+  // Internal business logic.
+  // These methods cannot be called from the host element.
+  // =======================================================
+
+  private handleBlur = () => {
+    this.mncBlur.emit(this.el);
+  };
+
+  private handleFocus = () => {
+    this.mncFocus.emit(this.el);
+  };
+
+  private handleClick = (ev: Event) => {
+    if (this.disabled || this.loading) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      return;
+    }
+
+    if (this.type === 'submit' || this.type === 'reset') {
+      const wrapperForm = this.el.closest('form');
+      if (!isNil(wrapperForm)) {
+        const btn = document.createElement('button');
+        btn.type = this.type;
+        btn.hidden = true;
+        wrapperForm.append(btn);
+
+        btn.click();
+        btn.remove();
+      }
+    }
+
+    this.mncClick.emit(this.el);
+  };
+
+  private handleSlotChange = () => {
+    this.hasPrefix = hasSlotContent(this.prefixElem, 'prefix');
+    this.hasSuffix = hasSlotContent(this.suffixElem, 'suffix');
+  };
+
+  // render() function
+  // Always the last one in the class.
+  // ===================================
+
+  render() {
+    const isLink = isDefined(this.href);
+    const TagElem = isLink ? 'a' : 'button';
+    const style = {
+      ...(this.border && { '--mnc-button--border-radius': `var(--mncradius--${this.border})` }),
+    };
+
+    return (
+      <Host style={style}>
+        <TagElem
+          class={{
+            'mnc-button': true,
+            [`mnc-button--${this.appearance}`]: true,
+            [`content-${this.justifyContent}`]: true,
+            [`${this.variant}`]: true,
+            [`${this.size}`]: true,
+            block: this.block,
+            disabled: this.disabled,
+            'has-prefix': this.hasPrefix,
+            'has-suffix': this.hasSuffix,
+            loading: this.loading,
+          }}
+          aria-disabled={this.disabled ? 'true' : 'false'}
+          disabled={this.disabled}
+          download={isLink ? this.download : undefined}
+          href={isLink ? this.href : undefined}
+          part="button"
+          rel={isLink && this.target ? 'noreferrer noopener' : undefined}
+          target={isLink ? this.target : undefined}
+          type={this.type}
+          tabIndex={this.disabled ? -1 : 0}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          onClick={this.handleClick}
+        >
+          <span class="mnc-button__prefix" ref={(spanElem) => (this.prefixElem = spanElem)} part="prefix">
+            <slot name="prefix" onSlotchange={this.handleSlotChange} />
+          </span>
+          <span class="mnc-button__label" part="label">
+            <slot />
+          </span>
+          <span class="mnc-button__suffix" ref={(spanElem) => (this.suffixElem = spanElem)} part="suffix">
+            <slot name="suffix" onSlotchange={this.handleSlotChange} />
+          </span>
+          {this.loading && (
+            <mnc-icon
+              class="mnc-button__loader"
+              name="spinner-gap"
+              role="img"
+              title={`${this.appearance} button loader`}
+            />
+          )}
+        </TagElem>
+      </Host>
+    );
+  }
+}

@@ -5,7 +5,62 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/mnc-button.types";
+export { TButtonAppearance, TButtonBorderRadius, TButtonSize, TButtonType, TButtonVariant } from "./components/button/mnc-button.types";
 export namespace Components {
+    /**
+     * Buttons are designed for users to take action on a page or a screen.
+     */
+    interface MncButton {
+        /**
+          * The appearance style to apply to the button
+         */
+        "appearance": TButtonAppearance;
+        /**
+          * If `true`, it will make the button fit to its parent width.
+         */
+        "block": boolean;
+        /**
+          * The corner radius of the button
+         */
+        "border": TButtonBorderRadius;
+        /**
+          * If true, the button will be disabled (no interaction allowed)
+         */
+        "disabled": boolean;
+        /**
+          * Tells the browser to treat the linked URL as a download. Only used when `href` is set. Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download
+         */
+        "download"?: string;
+        /**
+          * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
+         */
+        "href": string;
+        /**
+          * It determinate how the content should be aligned
+         */
+        "justifyContent": 'left' | 'center' | 'right';
+        /**
+          * If `true` it will display the button in a loading state
+         */
+        "loading": boolean;
+        /**
+          * The size of the button
+         */
+        "size": TButtonSize;
+        /**
+          * Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`) Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
+         */
+        "target": '_blank' | '_parent' | '_self' | '_top';
+        /**
+          * The default behavior of the button
+         */
+        "type": TButtonType;
+        /**
+          * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+         */
+        "variant": TButtonVariant;
+    }
     interface MyGantt {
         "gZoomIn": () => Promise<void>;
         "gZoomOut": () => Promise<void>;
@@ -16,7 +71,33 @@ export namespace Components {
         "updateCriticalPath": (toggle: any) => Promise<void>;
     }
 }
+export interface MncButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMncButtonElement;
+}
 declare global {
+    interface HTMLMncButtonElementEventMap {
+        "mncBlur": HTMLMncButtonElement;
+        "mncFocus": HTMLMncButtonElement;
+        "mncClick": HTMLMncButtonElement;
+    }
+    /**
+     * Buttons are designed for users to take action on a page or a screen.
+     */
+    interface HTMLMncButtonElement extends Components.MncButton, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLMncButtonElementEventMap>(type: K, listener: (this: HTMLMncButtonElement, ev: MncButtonCustomEvent<HTMLMncButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLMncButtonElementEventMap>(type: K, listener: (this: HTMLMncButtonElement, ev: MncButtonCustomEvent<HTMLMncButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLMncButtonElement: {
+        prototype: HTMLMncButtonElement;
+        new (): HTMLMncButtonElement;
+    };
     interface HTMLMyGanttElement extends Components.MyGantt, HTMLStencilElement {
     }
     var HTMLMyGanttElement: {
@@ -24,10 +105,76 @@ declare global {
         new (): HTMLMyGanttElement;
     };
     interface HTMLElementTagNameMap {
+        "mnc-button": HTMLMncButtonElement;
         "my-gantt": HTMLMyGanttElement;
     }
 }
 declare namespace LocalJSX {
+    /**
+     * Buttons are designed for users to take action on a page or a screen.
+     */
+    interface MncButton {
+        /**
+          * The appearance style to apply to the button
+         */
+        "appearance"?: TButtonAppearance;
+        /**
+          * If `true`, it will make the button fit to its parent width.
+         */
+        "block"?: boolean;
+        /**
+          * The corner radius of the button
+         */
+        "border"?: TButtonBorderRadius;
+        /**
+          * If true, the button will be disabled (no interaction allowed)
+         */
+        "disabled"?: boolean;
+        /**
+          * Tells the browser to treat the linked URL as a download. Only used when `href` is set. Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-download
+         */
+        "download"?: string;
+        /**
+          * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`
+         */
+        "href"?: string;
+        /**
+          * It determinate how the content should be aligned
+         */
+        "justifyContent"?: 'left' | 'center' | 'right';
+        /**
+          * If `true` it will display the button in a loading state
+         */
+        "loading"?: boolean;
+        /**
+          * Handler to be called when the button loses focus
+         */
+        "onMncBlur"?: (event: MncButtonCustomEvent<HTMLMncButtonElement>) => void;
+        /**
+          * Handler to be called when button gets focus
+         */
+        "onMncClick"?: (event: MncButtonCustomEvent<HTMLMncButtonElement>) => void;
+        /**
+          * Handler to be called when the button is clicked
+         */
+        "onMncFocus"?: (event: MncButtonCustomEvent<HTMLMncButtonElement>) => void;
+        /**
+          * The size of the button
+         */
+        "size"?: TButtonSize;
+        /**
+          * Where to display the linked URL, as the name for a browsing context (a `tab`, `window`, or `<iframe>`) Details: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target
+         */
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
+        /**
+          * The default behavior of the button
+         */
+        "type"?: TButtonType;
+        /**
+          * The variant of button to apply on top of the appearance (applicable only to `appearance="primary"`)
+         */
+        "variant"?: TButtonVariant;
+    }
     interface MyGantt {
         /**
           * The task data
@@ -35,6 +182,7 @@ declare namespace LocalJSX {
         "taskdata"?: {};
     }
     interface IntrinsicElements {
+        "mnc-button": MncButton;
         "my-gantt": MyGantt;
     }
 }
@@ -42,6 +190,10 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * Buttons are designed for users to take action on a page or a screen.
+             */
+            "mnc-button": LocalJSX.MncButton & JSXBase.HTMLAttributes<HTMLMncButtonElement>;
             "my-gantt": LocalJSX.MyGantt & JSXBase.HTMLAttributes<HTMLMyGanttElement>;
         }
     }
