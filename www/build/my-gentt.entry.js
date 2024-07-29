@@ -3817,7 +3817,6 @@ const MyGentt = class {
         tasks.forEach((task) => {
             const taskElement = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress_wrapper`);
             const taskElement2 = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress`);
-            console.log(taskElement);
             if (taskElement) {
                 if (task.progress < 0.5 && task.progress > 0.2) {
                     taskElement.classList.add('task-yellow');
@@ -3838,7 +3837,8 @@ const MyGentt = class {
         gantt.plugins({
             quick_info: true,
             tooltip: true,
-            critical_path: true
+            critical_path: true,
+            fullscreen: true // Ensure fullscreen plugin is activated
         });
         gantt.config.xml_date = "%Y-%m-%d %H:%i";
         gantt.init(this.el.shadowRoot.querySelector('#gantt_here'));
@@ -3902,13 +3902,73 @@ const MyGentt = class {
                 .catch(err => console.log("Error", err));
             return true; // Return true to confirm the link deletion
         });
-        // gantt.attachEvent("onTaskClick", (id) => {
-        //   this.applyTaskStyles(); 
-        //   return id
+        gantt.attachEvent("onTemplatesReady", () => {
+            const toggle = document.getElementById("i");
+            toggle.className = "fa fa-expand gantt-fullscreen";
+            gantt.toggleIcon = toggle;
+            this.el.shadowRoot.appendChild(toggle);
+            toggle.onclick = () => {
+                gantt.ext.fullscreen.toggle();
+            };
+        });
+        gantt.attachEvent("onExpand", () => {
+            const icon = gantt.toggleIcon;
+            if (icon) {
+                icon.className = icon.className.replace("fa-expand", "fa-compress");
+            }
+        });
+        gantt.attachEvent("onCollapse", () => {
+            const icon = gantt.toggleIcon;
+            if (icon) {
+                icon.className = icon.className.replace("fa-compress", "fa-expand");
+            }
+        });
+        // gantt.attachEvent("onTemplatesReady", () => {
+        //   console.log("onTemplatesReady")
+        //   const toggle = document.createElement("i");
+        //   toggle.className = "fa fa-expand gantt-fullscreen";
+        //   gantt.toggleIcon = toggle;
+        //   this.el.shadowRoot.appendChild(toggle);
+        //   toggle.onclick = () => {
+        //     if (document.fullscreenElement) {
+        //       document.exitFullscreen();
+        //     } else {
+        //       this.el.shadowRoot.querySelector('#gantt_here').requestFullscreen();
+        //     }
+        //   };
         // });
+        document.addEventListener("fullscreenchange", () => {
+            const icon = gantt.toggleIcon;
+            if (document.fullscreenElement) {
+                if (icon)
+                    icon.className = icon.className.replace("fa-expand", "fa-compress");
+            }
+            else {
+                if (icon)
+                    icon.className = icon.className.replace("fa-compress", "fa-expand");
+            }
+        });
+        const toggle = document.createElement("img");
+        toggle.className = "fa fa-expand gantt-fullscreen";
+        toggle.src = "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-fullscreen-vector-icon-png-image_702532.jpg";
+        toggle.style.height = "70px";
+        toggle.style.zIndex = "1";
+        toggle.style.bottom = "0";
+        gantt.toggleIcon = toggle;
+        this.el.shadowRoot.appendChild(toggle);
+        toggle.onclick = () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+                this.applyTaskStyles();
+            }
+            else {
+                this.el.shadowRoot.querySelector('#gantt_here').requestFullscreen();
+                this.applyTaskStyles();
+            }
+        };
     }
     render() {
-        return (h("div", { key: '55752f4702d40f84f4170f0d25610b5ea55c9127' }, h("div", { key: 'fccf1f809ca9ae242dbbd47a81d23d8d51fc451c', style: { position: "relative" } }, this.isLoading && h("div", { key: '6a61f199396ab7d4893c1b5a68203de6df0c9dee', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: 'b78bf25bcdd3fd1ef2d0ff4a5fb5501f08fefbf8', id: "gantt_here", style: { width: '100%', height: '500px' } })), h("p", { key: 'af25881df37edd5b2fe5733e341b4f26d4c6a346' }, "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, quos asperiores inventore repellat iusto voluptatibus accusantium cupiditate in ipsa unde quasi, quo omnis molestias fugiat neque iste recusandae atque optio!")));
+        return (h("div", { key: 'c25b96e37f795233413f855c7d49e300ca5bbfe3' }, h("div", { key: 'bb91ac8409f665639832ed69a8afd8d340ce3354', style: { position: "relative" } }, this.isLoading && h("div", { key: '217eeb87af3bd6b0b2f492d4213952b48e95ef49', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: '5918d2d510f224cea24b2800cf2e71cabffc172a', id: "gantt_here", style: { width: '100%', height: '500px' } }))));
     }
     get el() { return getElement(this); }
 };

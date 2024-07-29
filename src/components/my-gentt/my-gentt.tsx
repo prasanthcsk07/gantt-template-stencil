@@ -22,21 +22,19 @@ export class MyGentt {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   }
 
-
   applyTaskStyles() {
     const tasks = gantt.getTaskByTime(); // Get all tasks
     tasks.forEach((task) => {
       const taskElement = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress_wrapper`);
       const taskElement2 = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress`);
-      console.log(taskElement)
       if (taskElement) {
         if (task.progress < 0.5 && task.progress > 0.2) {
           taskElement.classList.add('task-yellow');
           taskElement2.classList.add('task-yellow-progress');
-        } else if(task.progress > 0.5) {
+        } else if (task.progress > 0.5) {
           taskElement.classList.add('task-green');
           taskElement2.classList.add('task-green-progress');
-        } else if(task.progress < 0.2){
+        } else if (task.progress < 0.2) {
           taskElement.classList.add('task-red');
           taskElement2.classList.add('task-red-progress');
         }
@@ -45,12 +43,11 @@ export class MyGentt {
   }
 
   componentDidLoad() {
-
-
     gantt.plugins({
       quick_info: true,
       tooltip: true,
-      critical_path: true
+      critical_path: true,
+      fullscreen: true // Ensure fullscreen plugin is activated
     });
 
     gantt.config.xml_date = "%Y-%m-%d %H:%i";
@@ -79,7 +76,7 @@ export class MyGentt {
         task.data = res;
         gantt.parse(task);
         this.isLoading = false;
-          this.applyTaskStyles(); 
+        this.applyTaskStyles();
       })
       .catch(error => {
         console.error('Error fetching chart:', error);
@@ -96,31 +93,31 @@ export class MyGentt {
       });
 
     gantt.attachEvent("onAfterTaskAdd", (id, task) => {
-      let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date), open: true, id: String(id)};
+      let newData = { ...task, end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) };
       axios.post("http://localhost:8000/chart", newData)
         .then(() => {
-          console.log("Successfully posted data")
-          this.applyTaskStyles(); 
+          console.log("Successfully posted data");
+          this.applyTaskStyles();
         })
         .catch(err => console.log("Error in post", err));
     });
 
     gantt.attachEvent("onAfterTaskUpdate", (id, task) => {
-      let newData = {...task, end_date:"", start_date: this.formatDate(task.start_date), open: true, id: String(id)};
+      let newData = { ...task, end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) };
       axios.put(`http://localhost:8000/chart/${id}`, newData)
         .then(() => {
-          console.log(id, "Data successfully updated")
-          this.applyTaskStyles(); 
+          console.log(id, "Data successfully updated");
+          this.applyTaskStyles();
         })
         .catch(err => console.log("Error", err));
     });
 
     gantt.attachEvent("onAfterTaskDelete", (id) => {
       axios.delete(`http://localhost:8000/chart/${id}`)
-        .then(() =>{
-           console.log(`${id} - Deleted successfully`)
-           this.applyTaskStyles(); 
-          })
+        .then(() => {
+          console.log(`${id} - Deleted successfully`);
+          this.applyTaskStyles();
+        })
         .catch(err => console.log("Error", err));
     });
 
@@ -138,10 +135,73 @@ export class MyGentt {
       return true; // Return true to confirm the link deletion
     });
 
-    // gantt.attachEvent("onTaskClick", (id) => {
-    //   this.applyTaskStyles(); 
-    //   return id
+    gantt.attachEvent("onTemplatesReady", () => {
+      const toggle = document.getElementById("i");
+      toggle.className = "fa fa-expand gantt-fullscreen";
+      gantt.toggleIcon = toggle;
+      this.el.shadowRoot.appendChild(toggle);
+      toggle.onclick = () => {
+        gantt.ext.fullscreen.toggle();
+      };
+    });
+
+    gantt.attachEvent("onExpand", () => {
+      const icon = gantt.toggleIcon;
+      if (icon) {
+        icon.className = icon.className.replace("fa-expand", "fa-compress");
+      }
+    });
+
+    gantt.attachEvent("onCollapse", () => {
+      const icon = gantt.toggleIcon;
+      if (icon) {
+        icon.className = icon.className.replace("fa-compress", "fa-expand");
+      }
+    });
+
+    // gantt.attachEvent("onTemplatesReady", () => {
+    //   console.log("onTemplatesReady")
+    //   const toggle = document.createElement("i");
+    //   toggle.className = "fa fa-expand gantt-fullscreen";
+    //   gantt.toggleIcon = toggle;
+    //   this.el.shadowRoot.appendChild(toggle);
+    //   toggle.onclick = () => {
+    //     if (document.fullscreenElement) {
+    //       document.exitFullscreen();
+    //     } else {
+    //       this.el.shadowRoot.querySelector('#gantt_here').requestFullscreen();
+    //     }
+    //   };
     // });
+    
+    document.addEventListener("fullscreenchange", () => {
+      const icon = gantt.toggleIcon;
+      if (document.fullscreenElement) {
+        if (icon) icon.className = icon.className.replace("fa-expand", "fa-compress");
+      } else {
+        if (icon) icon.className = icon.className.replace("fa-compress", "fa-expand");
+      }
+    });
+
+
+    const toggle = document.createElement("img");
+    toggle.className = "fa fa-expand gantt-fullscreen";
+    toggle.src = "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-fullscreen-vector-icon-png-image_702532.jpg";
+    toggle.style.height = "70px"
+    toggle.style.zIndex = "1"
+    toggle.style.bottom = "0"
+    gantt.toggleIcon = toggle;
+    this.el.shadowRoot.appendChild(toggle);
+    toggle.onclick = () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        this.applyTaskStyles();
+      } else {
+        this.el.shadowRoot.querySelector('#gantt_here').requestFullscreen();
+        this.applyTaskStyles();
+      }
+    };
+    
   }
 
   render() {
@@ -151,7 +211,6 @@ export class MyGentt {
           {this.isLoading && <div style={{ position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }} id="skeleton_loader"></div>}
           <div id="gantt_here" style={{ width: '100%', height: '500px' }}></div>
         </div>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, quos asperiores inventore repellat iusto voluptatibus accusantium cupiditate in ipsa unde quasi, quo omnis molestias fugiat neque iste recusandae atque optio!</p>
       </div>
     );
   }
