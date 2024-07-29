@@ -7,6 +7,13 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface MyGentt {
+        "gZoomIn": () => Promise<void>;
+        "gZoomOut": () => Promise<void>;
+        /**
+          * The task data
+         */
+        "taskdata": {};
+        "updateCriticalPath": (toggle: any) => Promise<void>;
     }
 }
 declare global {
@@ -22,6 +29,10 @@ declare global {
 }
 declare namespace LocalJSX {
     interface MyGentt {
+        /**
+          * The task data
+         */
+        "taskdata"?: {};
     }
     interface IntrinsicElements {
         "my-gentt": MyGentt;
