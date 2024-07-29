@@ -45,6 +45,14 @@ export class MyGentt {
   }
 
   componentDidLoad() {
+
+
+    gantt.plugins({
+      quick_info: true,
+      tooltip: true,
+      critical_path: true
+    });
+
     gantt.config.xml_date = "%Y-%m-%d %H:%i";
     gantt.init(this.el.shadowRoot.querySelector('#gantt_here'));
 
@@ -135,7 +143,6 @@ export class MyGentt {
     //   return id
     // });
   }
-
 
   render() {
     return (

@@ -3835,6 +3835,11 @@ const MyGentt = class {
         });
     }
     componentDidLoad() {
+        gantt.plugins({
+            quick_info: true,
+            tooltip: true,
+            critical_path: true
+        });
         gantt.config.xml_date = "%Y-%m-%d %H:%i";
         gantt.init(this.el.shadowRoot.querySelector('#gantt_here'));
         let task = {};
@@ -3903,7 +3908,7 @@ const MyGentt = class {
         // });
     }
     render() {
-        return (h("div", { key: '6c375d773f1be08d016cec8ec330688c4505f121' }, h("div", { key: '9c311660bec98fb8f30e2ec3a4becec58e28adca', style: { position: "relative" } }, this.isLoading && h("div", { key: '85aa0eb9c1b3e6e349eb96f458bd12aed5dbea13', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: '0b41ceef0e515b3a57db5ae84e733635b98a1bf0', id: "gantt_here", style: { width: '100%', height: '500px' } })), h("p", { key: '66960b8cc97668a6ae686e52e592c52dc5b28af0' }, "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, quos asperiores inventore repellat iusto voluptatibus accusantium cupiditate in ipsa unde quasi, quo omnis molestias fugiat neque iste recusandae atque optio!")));
+        return (h("div", { key: '55752f4702d40f84f4170f0d25610b5ea55c9127' }, h("div", { key: 'fccf1f809ca9ae242dbbd47a81d23d8d51fc451c', style: { position: "relative" } }, this.isLoading && h("div", { key: '6a61f199396ab7d4893c1b5a68203de6df0c9dee', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: 'b78bf25bcdd3fd1ef2d0ff4a5fb5501f08fefbf8', id: "gantt_here", style: { width: '100%', height: '500px' } })), h("p", { key: 'af25881df37edd5b2fe5733e341b4f26d4c6a346' }, "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, quos asperiores inventore repellat iusto voluptatibus accusantium cupiditate in ipsa unde quasi, quo omnis molestias fugiat neque iste recusandae atque optio!")));
     }
     get el() { return getElement(this); }
 };
