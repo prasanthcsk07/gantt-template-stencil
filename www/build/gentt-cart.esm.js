@@ -43,7 +43,7 @@ var patchCloneNodeFix = (HTMLElementPrototype) => {
 
 patchBrowser().then(async (options) => {
   await globalScripts();
-  return bootstrapLazy([["my-gentt",[[1,"my-gentt",{"taskdata":[16],"gZoomIn":[64],"gZoomOut":[64],"updateCriticalPath":[64]}]]]], options);
+  return bootstrapLazy([["my-gantt",[[1,"my-gantt",{"taskdata":[16],"gZoomIn":[64],"gZoomOut":[64],"updateCriticalPath":[64]}]]]], options);
 });
 
 //# sourceMappingURL=gentt-cart.esm.js.map

@@ -4,7 +4,7 @@ import { getData } from './data/data'
 import { initZoom } from './mnc-gantt-zoom';
 
 @Component({
-  tag: 'my-gentt',
+  tag: 'my-gantt',
   styleUrl: './scss/mnc-gantt.scss',
   shadow: true,
 })

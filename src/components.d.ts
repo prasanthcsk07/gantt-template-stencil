@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyGentt {
+    interface MyGantt {
         "gZoomIn": () => Promise<void>;
         "gZoomOut": () => Promise<void>;
         /**
@@ -17,32 +17,32 @@ export namespace Components {
     }
 }
 declare global {
-    interface HTMLMyGenttElement extends Components.MyGentt, HTMLStencilElement {
+    interface HTMLMyGanttElement extends Components.MyGantt, HTMLStencilElement {
     }
-    var HTMLMyGenttElement: {
-        prototype: HTMLMyGenttElement;
-        new (): HTMLMyGenttElement;
+    var HTMLMyGanttElement: {
+        prototype: HTMLMyGanttElement;
+        new (): HTMLMyGanttElement;
     };
     interface HTMLElementTagNameMap {
-        "my-gentt": HTMLMyGenttElement;
+        "my-gantt": HTMLMyGanttElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyGentt {
+    interface MyGantt {
         /**
           * The task data
          */
         "taskdata"?: {};
     }
     interface IntrinsicElements {
-        "my-gentt": MyGentt;
+        "my-gantt": MyGantt;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-gentt": LocalJSX.MyGentt & JSXBase.HTMLAttributes<HTMLMyGenttElement>;
+            "my-gantt": LocalJSX.MyGantt & JSXBase.HTMLAttributes<HTMLMyGanttElement>;
         }
     }
 }
