@@ -281,14 +281,17 @@ export class MyGentt {
 
   zoomIn() {
     gantt.ext.zoom.zoomIn();
+    this.applyTaskStyles();
   }
 
   zoomOut() {
     gantt.ext.zoom.zoomOut();
+    this.applyTaskStyles();
   }
 
   setZoomLevel(event) {
     gantt.ext.zoom.setLevel(event.target.value);
+    this.applyTaskStyles();
   }
 
   render() {
