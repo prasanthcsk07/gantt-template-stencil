@@ -92,7 +92,7 @@
     border-radius: 2px;
     background: #fff;
     padding: 4px 12px;
-    margin: 0 5px;
+    margin: 0 7px;
     color: rgba(0, 0, 0, 0.7);
     line-height: 20px;
   }
@@ -105,6 +105,7 @@
   label{
     /* font-family: ; */
     font:  16px  "Roboto", Arial, sans-serif;
+    margin-right: 20px;
   }
   
   

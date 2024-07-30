@@ -57,15 +57,33 @@
     {
       "id": "3",
       "text": "Task #2",
-      "start_date": "2024-07-12 00:00",
+      "start_date": "2024-07-07 00:00",
       "duration": 8,
-      "progress": 0.6,
-      "parent": 1
+      "progress": 0.4390625,
+      "parent": 1,
+      "end_date": "",
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [],
+      "$target": [
+        "2"
+      ],
+      "$rendered_parent": 1,
+      "$level": 1,
+      "$local_index": 1,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 2,
+      "open": true
     },
     {
       "id": "4",
       "text": "Project #3",
-      "start_date": "2024-07-03 00:00",
+      "start_date": "2024-07-02 00:00",
       "duration": 10,
       "progress": 0.7175,
       "open": true,
@@ -75,7 +93,10 @@
       "$rendered_type": "task",
       "$calculate_duration": true,
       "$effective_calendar": "global",
-      "$source": [],
+      "$source": [
+        "3",
+        "4d04"
+      ],
       "$target": [],
       "parent": 0,
       "$rendered_parent": 0,
@@ -89,9 +110,9 @@
     {
       "id": "5",
       "text": "Task #1",
-      "start_date": "2024-07-06 00:00",
+      "start_date": "2024-07-04 00:00",
       "duration": 8,
-      "progress": 0.359375,
+      "progress": 0.5375,
       "parent": 4,
       "end_date": "",
       "$no_start": false,
@@ -99,8 +120,14 @@
       "$rendered_type": "task",
       "$calculate_duration": true,
       "$effective_calendar": "global",
-      "$source": [],
-      "$target": [],
+      "$source": [
+        "4"
+      ],
+      "$target": [
+        "3",
+        "8d72",
+        "4d04"
+      ],
       "$rendered_parent": 4,
       "$level": 1,
       "$local_index": 0,
@@ -113,7 +140,7 @@
     {
       "id": "6",
       "text": "Task #2",
-      "start_date": "2024-07-05 00:00",
+      "start_date": "2024-07-02 00:00",
       "duration": 8,
       "progress": 0.1171875,
       "parent": 4,
@@ -123,8 +150,13 @@
       "$rendered_type": "task",
       "$calculate_duration": true,
       "$effective_calendar": "global",
-      "$source": [],
-      "$target": [],
+      "$source": [
+        "d050"
+      ],
+      "$target": [
+        "4",
+        "7f50"
+      ],
       "$rendered_parent": 4,
       "$level": 1,
       "$local_index": 1,
