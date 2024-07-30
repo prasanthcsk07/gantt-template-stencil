@@ -1,5 +1,5 @@
-import { B as BUILD, c as consoleDevInfo, H, d as doc, N as NAMESPACE, p as promiseResolve, b as bootstrapLazy } from './index-9343b71f.js';
-export { s as setNonce } from './index-9343b71f.js';
+import { B as BUILD, c as consoleDevInfo, H, d as doc, N as NAMESPACE, p as promiseResolve, b as bootstrapLazy } from './index-5c493236.js';
+export { s as setNonce } from './index-5c493236.js';
 import { g as globalScripts } from './app-globals-0f993ce5.js';
 
 /*
@@ -43,7 +43,7 @@ var patchCloneNodeFix = (HTMLElementPrototype) => {
 
 patchBrowser().then(async (options) => {
   await globalScripts();
-  return bootstrapLazy([["my-gentt",[[1,"my-gentt",{"isLoading":[32]}]]]], options);
+  return bootstrapLazy([["my-gentt",[[1,"my-gentt",{"isLoading":[32],"zoomConfig":[32]}]]]], options);
 });
 
 //# sourceMappingURL=gentt-cart.esm.js.map

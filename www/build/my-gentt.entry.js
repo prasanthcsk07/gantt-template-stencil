@@ -1,4 +1,4 @@
-import { r as registerInstance, h, g as getElement } from './index-9343b71f.js';
+import { r as registerInstance, h, g as getElement } from './index-5c493236.js';
 
 'use strict';
 
@@ -3803,6 +3803,66 @@ const MyGentt = class {
     constructor(hostRef) {
         registerInstance(this, hostRef);
         this.isLoading = false;
+        this.zoomConfig = {
+            levels: [
+                {
+                    name: 'day',
+                    scale_height: 27,
+                    min_column_width: 80,
+                    scales: [
+                        { unit: 'day', step: 1, format: '%d %M' }
+                    ]
+                },
+                {
+                    name: 'week',
+                    scale_height: 50,
+                    min_column_width: 50,
+                    scales: [
+                        {
+                            unit: 'week', step: 1, format: function (date) {
+                                var dateToStr = gantt.date.date_to_str('%d %M');
+                                var endDate = gantt.date.add(date, -6, 'day');
+                                var weekNum = gantt.date.date_to_str('%W')(date);
+                                return '#' + weekNum + ', ' + dateToStr(date) + ' - ' + dateToStr(endDate);
+                            }
+                        },
+                        { unit: 'day', step: 1, format: '%j %D' }
+                    ]
+                },
+                {
+                    name: 'month',
+                    scale_height: 50,
+                    min_column_width: 120,
+                    scales: [
+                        { unit: 'month', format: '%F, %Y' },
+                        { unit: 'week', format: 'Week #%W' }
+                    ]
+                },
+                {
+                    name: 'quarter',
+                    height: 50,
+                    min_column_width: 90,
+                    scales: [
+                        { unit: 'month', step: 1, format: '%M' },
+                        {
+                            unit: 'quarter', step: 1, format: function (date) {
+                                var dateToStr = gantt.date.date_to_str('%M');
+                                var endDate = gantt.date.add(gantt.date.add(date, 3, 'month'), -1, 'day');
+                                return dateToStr(date) + ' - ' + dateToStr(endDate);
+                            }
+                        }
+                    ]
+                },
+                {
+                    name: 'year',
+                    scale_height: 50,
+                    min_column_width: 30,
+                    scales: [
+                        { unit: 'year', step: 1, format: '%Y' }
+                    ]
+                }
+            ]
+        };
     }
     formatDate(date) {
         const year = date.getFullYear();
@@ -3966,9 +4026,28 @@ const MyGentt = class {
                 this.applyTaskStyles();
             }
         };
+        gantt.ext.zoom.init(this.zoomConfig);
+        gantt.ext.zoom.setLevel('day');
+        gantt.ext.zoom.attachEvent('onAfterZoom', (level, config) => {
+            const radio = this.el.shadowRoot.querySelector(`.gantt_radio[value='${config.name}']`);
+            if (radio) {
+                radio.checked = true;
+            }
+        });
+        gantt.init(this.el.shadowRoot.querySelector('#gantt_here'), new Date(2022, 8, 1), new Date(2023, 10, 1));
+        // gantt.parse(demo_tasks);
+    }
+    zoomIn() {
+        gantt.ext.zoom.zoomIn();
+    }
+    zoomOut() {
+        gantt.ext.zoom.zoomOut();
+    }
+    setZoomLevel(event) {
+        gantt.ext.zoom.setLevel(event.target.value);
     }
     render() {
-        return (h("div", { key: 'c25b96e37f795233413f855c7d49e300ca5bbfe3' }, h("div", { key: 'bb91ac8409f665639832ed69a8afd8d340ce3354', style: { position: "relative" } }, this.isLoading && h("div", { key: '217eeb87af3bd6b0b2f492d4213952b48e95ef49', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: '5918d2d510f224cea24b2800cf2e71cabffc172a', id: "gantt_here", style: { width: '100%', height: '500px' } }))));
+        return (h("div", { key: '249b5c6e97bc844583d1fde6216837d884b7e2f5' }, h("form", { key: '03f4d7eaaef47450b253fd145288a31d3038e547', class: "gantt_control" }, h("input", { key: '656e5f7b8e8b5072f6b264777936c4f3db469c5d', type: "button", value: "Zoom In", onClick: () => this.zoomIn() }), h("input", { key: '6b6dc0756efabd5b8b5a017f6774634d88ccd99f', type: "button", value: "Zoom Out", onClick: () => this.zoomOut() }), h("input", { key: '947471c02e4c8811477de8d881a2b4bf56efbd68', type: "radio", id: "scale1", class: "gantt_radio", name: "scale", value: "day", onClick: (event) => this.setZoomLevel(event) }), h("label", { key: 'a20a846a3b96ed7332f397eaec8d815fe11c822e', htmlFor: "scale1" }, "Day scale"), h("input", { key: 'aba47e7e0ac5e39fa72ba610cf238731a540fc6e', type: "radio", id: "scale2", class: "gantt_radio", name: "scale", value: "week", onClick: (event) => this.setZoomLevel(event) }), h("label", { key: '87ecf0a9154ca69ae42ce7266db9b8f8bce1778f', htmlFor: "scale2" }, "Week scale"), h("input", { key: 'e95c2c906554293ff22a1c72798cafbdd53c63dc', type: "radio", id: "scale3", class: "gantt_radio", name: "scale", value: "month", onClick: (event) => this.setZoomLevel(event) }), h("label", { key: '929f9ab9c0fcac5356b685381f92843d52df9265', htmlFor: "scale3" }, "Month scale"), h("input", { key: '411d92c350b277a32dcb3a244f9ace0c9b4a007b', type: "radio", id: "scale4", class: "gantt_radio", name: "scale", value: "quarter", onClick: (event) => this.setZoomLevel(event) }), h("label", { key: 'b4d83c5978901e09a375d459d49c694691a7d8eb', htmlFor: "scale4" }, "Quarter scale"), h("input", { key: '3f57c01e5d2f1ab1375c3346565ce3106f0ed997', type: "radio", id: "scale5", class: "gantt_radio", name: "scale", value: "year", onClick: (event) => this.setZoomLevel(event) }), h("label", { key: 'b7e9b4e3dcd24011703929f5c15bfda4f0982871', htmlFor: "scale5" }, "Year scale")), h("div", { key: 'd027e11735b3c5817b7cce5150ef06b29935606c', style: { position: "relative" } }, this.isLoading && h("div", { key: '4c3af374d0a2ef6432560ca2d132b9d93b083028', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }, id: "skeleton_loader" }), h("div", { key: 'e88b95bc25cb96aae319e6447d78ddc62cf80320', id: "gantt_here", style: { width: '100%', height: '500px' } }))));
     }
     get el() { return getElement(this); }
 };

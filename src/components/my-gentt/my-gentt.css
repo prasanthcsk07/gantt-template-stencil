@@ -78,6 +78,21 @@
     border-color: green !important;
   }
   
+  .gantt_control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .gantt_control input[type="button"] {
+    margin-bottom: 5px;
+  }
+  
+  .gantt_control input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  
   
   @keyframes loading {
     0% {
