@@ -130,7 +130,17 @@ export class MyGentt {
 
     this.isLoading = true;
 
-     axios.get<ChartData>("http://localhost:8000/chart")
+
+    axios.get<LinksData>("http://localhost:8000/links")
+    .then(response => response.data)
+    .then(res => {
+      task.links = res;
+    })
+    .catch(error => {
+      console.error('Error fetching links:', error);
+    });
+
+    axios.get<ChartData>("http://localhost:8000/chart")
       .then(response => response.data)
       .then(res => {
         task.data = res;
@@ -143,14 +153,7 @@ export class MyGentt {
         this.isLoading = false;
       });
 
-    axios.get<LinksData>("http://localhost:8000/links")
-      .then(response => response.data)
-      .then(res => {
-        task.links = res;
-      })
-      .catch(error => {
-        console.error('Error fetching links:', error);
-      });
+   
 
     gantt.attachEvent("onAfterTaskAdd", (id, task) => {
       let newData = { ...task, end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) };
@@ -233,7 +236,7 @@ export class MyGentt {
     //     }
     //   };
     // });
-    
+
     document.addEventListener("fullscreenchange", () => {
       const icon = gantt.toggleIcon;
       if (document.fullscreenElement) {
@@ -273,7 +276,6 @@ export class MyGentt {
     });
 
     gantt.init(this.el.shadowRoot.querySelector('#gantt_here'), new Date(2022, 8, 1), new Date(2023, 10, 1));
-    // gantt.parse(demo_tasks);
   }
 
 
