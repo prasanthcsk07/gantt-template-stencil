@@ -3,7 +3,8 @@ import 'dhtmlx-gantt';
 import { setGanttPlugins } from './setGanttPlugins';
 import { ZoomConfigData } from './zoomConfigData';
 import { fetchChartData, fetchLinksData, Task } from './api/apiService';
-import { setupGanttEvents } from './gantt-events/ganttEvents';
+import { setupGanttEvents } from './events/ganttEvents';
+import { initializeZoomPlugin, zoomIn, zoomOut, setZoomLevel } from './events/zoomEvents';
 
 declare const gantt: any;
 
@@ -107,29 +108,22 @@ export class MyGantt {
   }
 
   setupZoomPlugin() {
-    gantt.ext.zoom.init(this.zoomConfig);
-    gantt.ext.zoom.setLevel('day');
-    gantt.ext.zoom.attachEvent('onAfterZoom', (level, config) => {
-      const radio = this.el.shadowRoot.querySelector(`.gantt_radio[value='${config.name}']`) as HTMLInputElement;
-      if (radio) {
-        radio.checked = true;
-      }
-    });
+    initializeZoomPlugin(gantt, this.zoomConfig, this.el.shadowRoot);
   }
 
   @Listen('zoomIn')
   handleZoomIn() {
-    gantt.ext.zoom.zoomIn();
+    zoomIn();
   }
 
   @Listen('zoomOut')
   handleZoomOut() {
-    gantt.ext.zoom.zoomOut();
+    zoomOut();
   }
 
   @Listen('setZoomLevel')
   handleSetZoomLevel(event: CustomEvent) {
-    gantt.ext.zoom.setLevel(event.detail);
+    setZoomLevel(event.detail);
   }
 
   @Listen('toggleCriticalPath')
