@@ -27,6 +27,11 @@ export class MyGantt {
 
   initializeGantt() {
     gantt.config.highlight_critical_path = true;
+
+
+    gantt.config.auto_scheduling = true;
+	gantt.config.auto_scheduling_strict = true;
+  
     const ganttContainer = this.el.shadowRoot.querySelector('#gantt_here') as HTMLElement;
 
     setGanttPlugins(gantt);

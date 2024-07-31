@@ -46,7 +46,8 @@ export const postTaskData = async (task: any) => {
 
 export const updateTaskData = async (id: number, task: any) => {
   try {
-    await axios.put(`${BASE_URL}/chart/${id}`, task);
+    let newTask = {...task, type: task.parent == 0 ? "project": ""}
+    await axios.put(`${BASE_URL}/chart/${id}`, newTask);
     console.log(`${id} - Data successfully updated`);
   } catch (error) {
     console.error('Error:', error);
