@@ -6,10 +6,9 @@ export function setGanttPlugins(gantt) {
       critical_path: true,
       fullscreen: true,
       multiselect: true,
-      auto_scheduling: true,
     });
   
     // Initialize each plugin here if necessary
-   
+
   }
   

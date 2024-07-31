@@ -64,7 +64,7 @@
     {
       "id": "4",
       "text": "The employee relocation",
-      "start_date": "29-07-2024 00:00",
+      "start_date": "30-07-2024 00:00",
       "duration": 15,
       "parent": "1",
       "progress": 7,
@@ -87,12 +87,13 @@
       "$expanded_branch": true,
       "$resourceAssignments": [],
       "$index": 3,
-      "open": true
+      "open": true,
+      "type": ""
     },
     {
       "id": "5",
       "text": "Interior office",
-      "start_date": "31-07-2024 00:00",
+      "start_date": "30-07-2024 00:00",
       "duration": 15,
       "parent": "1",
       "progress": 0.819078947368421,
@@ -115,7 +116,8 @@
       "$expanded_branch": true,
       "$resourceAssignments": [],
       "$index": 4,
-      "open": true
+      "open": true,
+      "type": ""
     },
     {
       "id": "6",
@@ -319,9 +321,29 @@
     {
       "id": "16",
       "text": "Integrate System",
-      "start_date": "16-09-2024",
-      "duration": "15",
-      "parent": "14"
+      "start_date": "16-09-2024 00:00",
+      "duration": 14,
+      "parent": "14",
+      "end_date": "",
+      "progress": 0,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "17"
+      ],
+      "$target": [],
+      "$rendered_parent": "14",
+      "$level": 1,
+      "$local_index": 1,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 16,
+      "open": true,
+      "type": ""
     },
     {
       "id": "17",
@@ -348,7 +370,8 @@
       "$expanded_branch": true,
       "$resourceAssignments": [],
       "$index": 17,
-      "open": true
+      "open": true,
+      "type": ""
     },
     {
       "id": "1722393641038",
@@ -374,7 +397,8 @@
       "$index": 9,
       "$local_index": 8,
       "open": true,
-      "$open": true
+      "$open": true,
+      "type": ""
     },
     {
       "id": "1722394001568",
