@@ -40,7 +40,7 @@
       "start_date": "22-07-2024 00:00",
       "duration": 5,
       "parent": "1",
-      "progress": 0.625,
+      "progress": 0.3275,
       "end_date": "",
       "$no_start": false,
       "$no_end": false,
@@ -108,10 +108,30 @@
     {
       "id": "7",
       "text": "Workplaces preparation",
-      "start_date": "21-08-2024",
-      "duration": "2",
+      "start_date": "20-08-2024 00:00",
+      "duration": 2,
       "parent": "1",
-      "progress": 7
+      "progress": 7,
+      "end_date": "",
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "7"
+      ],
+      "$target": [
+        "6"
+      ],
+      "$rendered_parent": "1",
+      "$level": 1,
+      "$local_index": 5,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 6,
+      "open": true
     },
     {
       "id": "8",
@@ -142,7 +162,7 @@
     {
       "id": "9",
       "text": "Workplaces importation",
-      "start_date": "22-08-2024 00:00",
+      "start_date": "21-08-2024 00:00",
       "duration": 1,
       "parent": "1",
       "end_date": "",
@@ -299,7 +319,7 @@
       "$rendered_parent": "1",
       "$level": 1,
       "end_date": "",
-      "progress": 0.24739583333333334,
+      "progress": 0.30572916666666666,
       "$no_start": false,
       "$no_end": false,
       "$rendered_type": "task",
@@ -403,12 +423,6 @@
     {
       "id": "7",
       "source": "7",
-      "target": "9",
-      "type": "0"
-    },
-    {
-      "id": "8",
-      "source": "8",
       "target": "9",
       "type": "0"
     },

@@ -1,0 +1,28 @@
+
+.gantt_control {
+    background-color: #ededed;
+    padding: 7px;
+    text-align: center;
+  }
+  
+  .gantt_control input[type="button"], button {
+    font: 500 14px Roboto;
+    border: 1px solid #D9D9D9;
+    border-radius: 2px;
+    background: #fff;
+    padding: 4px 12px;
+    margin: 0 7px;
+    color: rgba(0, 0, 0, 0.7);
+    line-height: 20px;
+  }
+  
+  .gantt_control input[type="radio"] {
+    margin-right: 5px;
+    transform: scale(1.2); 
+  }
+
+  label{
+    /* font-family: ; */
+    font:  16px  "Roboto", Arial, sans-serif;
+    margin-right: 20px;
+  }
