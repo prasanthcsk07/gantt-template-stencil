@@ -94,7 +94,7 @@ export class MyGentt {
     toggle.className = "fa fa-expand gantt-fullscreen";
     toggle.src = "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-fullscreen-vector-icon-png-image_702532.jpg";
     toggle.style.height = "50px";
-    toggle.style.marginTop = "-20rem";
+    toggle.style.marginTop = "1rem";
     gantt.toggleIcon = toggle;
     this.el.shadowRoot.appendChild(toggle);
     toggle.onclick = () => {

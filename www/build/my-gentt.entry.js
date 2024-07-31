@@ -4051,7 +4051,7 @@ const MyGentt = class {
         toggle.className = "fa fa-expand gantt-fullscreen";
         toggle.src = "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-fullscreen-vector-icon-png-image_702532.jpg";
         toggle.style.height = "50px";
-        toggle.style.marginTop = "-20rem";
+        toggle.style.marginTop = "1rem";
         gantt.toggleIcon = toggle;
         this.el.shadowRoot.appendChild(toggle);
         toggle.onclick = () => {
@@ -4093,7 +4093,7 @@ const MyGentt = class {
         }
     }
     render() {
-        return (h("div", { key: 'f1df8b803086eb98d0002e6b95c475b31e9933fb' }, h("gantt-control", { key: '6038b84147924bf3487d54ef9ad1ef007fcfeb27' }), h("div", { key: 'aab4513c50e0b1822f4c8442fc1f46b3b641408d', id: "gantt_here", style: { width: '100%', height: 'calc(80vh - 24px)' } }), this.isLoading && (h("div", { key: 'f1e77ee6ce14fbd9b16f802509d34bfd4faebfbb', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "calc(80vh - 52px)", zIndex: "999" }, id: "skeleton_loader" }))));
+        return (h("div", { key: '8c37ea2e36f993ec47ea81ba32970f977e5abc6e' }, h("gantt-control", { key: 'e59ae102ca869d9c1e02cc1dba4e7417f735d532' }), h("div", { key: '4166a3d9ebf16f948e67ec44185b0ea95bd10698', id: "gantt_here", style: { width: '100%', height: 'calc(80vh - 24px)' } }), this.isLoading && (h("div", { key: 'e691c51fee283830aa71c2a6dc0c13528ebfa802', style: { position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "calc(80vh - 52px)", zIndex: "999" }, id: "skeleton_loader" }))));
     }
     get el() { return getElement(this); }
 };
