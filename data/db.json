@@ -2,20 +2,19 @@
   "chart": [
     {
       "id": "1",
-      "text": "Project #2",
-      "start_date": "2024-07-03 00:00",
-      "duration": 10,
-      "progress": 0.7757142857142857,
+      "text": "Office itinerancy",
       "open": true,
+      "type": "project",
+      "progress": 0.045454545454545456,
+      "$no_start": true,
+      "$no_end": true,
+      "$rendered_type": "project",
+      "start_date": "22-07-2024 00:00",
+      "duration": 25,
       "end_date": "",
-      "$no_start": false,
-      "$no_end": false,
-      "$rendered_type": "task",
       "$calculate_duration": true,
       "$effective_calendar": "global",
-      "$source": [
-        "1"
-      ],
+      "$source": [],
       "$target": [],
       "parent": 0,
       "$rendered_parent": 0,
@@ -23,16 +22,25 @@
       "$local_index": 0,
       "$open": true,
       "$expanded_branch": true,
-      "$resourceAssignments": [],
-      "$index": 0
+      "$index": 0,
+      "$rollup": [],
+      "$resourceAssignments": []
     },
     {
       "id": "2",
-      "text": "Task #1",
-      "start_date": "2024-07-08 00:00",
-      "duration": 8,
-      "progress": 0.9,
-      "parent": 1,
+      "text": "Office facing",
+      "start_date": "22-07-2024",
+      "duration": "20",
+      "parent": "1",
+      "progress": 6
+    },
+    {
+      "id": "3",
+      "text": "Furniture installation",
+      "start_date": "22-07-2024 00:00",
+      "duration": 5,
+      "parent": "1",
+      "progress": 0.625,
       "end_date": "",
       "$no_start": false,
       "$no_end": false,
@@ -40,38 +48,11 @@
       "$calculate_duration": true,
       "$effective_calendar": "global",
       "$source": [
+        "1",
         "2"
       ],
-      "$target": [
-        "1"
-      ],
-      "$open": false,
-      "$level": 1,
-      "$rendered_parent": 1,
-      "$local_index": 0,
-      "$expanded_branch": true,
-      "$resourceAssignments": [],
-      "$index": 1,
-      "open": true
-    },
-    {
-      "id": "3",
-      "text": "Task #2",
-      "start_date": "2024-07-07 00:00",
-      "duration": 8,
-      "progress": 0.4390625,
-      "parent": 1,
-      "end_date": "",
-      "$no_start": false,
-      "$no_end": false,
-      "$rendered_type": "task",
-      "$calculate_duration": true,
-      "$effective_calendar": "global",
-      "$source": [],
-      "$target": [
-        "2"
-      ],
-      "$rendered_parent": 1,
+      "$target": [],
+      "$rendered_parent": "1",
       "$level": 1,
       "$local_index": 1,
       "$open": false,
@@ -82,38 +63,19 @@
     },
     {
       "id": "4",
-      "text": "Project #3",
-      "start_date": "2024-07-02 00:00",
-      "duration": 10,
-      "progress": 0.7175,
-      "open": true,
-      "end_date": "",
-      "$no_start": false,
-      "$no_end": false,
-      "$rendered_type": "task",
-      "$calculate_duration": true,
-      "$effective_calendar": "global",
-      "$source": [
-        "3",
-        "4d04"
-      ],
-      "$target": [],
-      "parent": 0,
-      "$rendered_parent": 0,
-      "$level": 0,
-      "$local_index": 1,
-      "$open": true,
-      "$expanded_branch": true,
-      "$resourceAssignments": [],
-      "$index": 3
+      "text": "The employee relocation",
+      "start_date": "29-07-2024",
+      "duration": "15",
+      "parent": "1",
+      "progress": 7
     },
     {
       "id": "5",
-      "text": "Task #1",
-      "start_date": "2024-07-04 00:00",
-      "duration": 8,
-      "progress": 0.5375,
-      "parent": 4,
+      "text": "Interior office",
+      "start_date": "29-07-2024 00:00",
+      "duration": 15,
+      "parent": "1",
+      "progress": 0.819078947368421,
       "end_date": "",
       "$no_start": false,
       "$no_end": false,
@@ -121,16 +83,14 @@
       "$calculate_duration": true,
       "$effective_calendar": "global",
       "$source": [
-        "4"
+        "5"
       ],
       "$target": [
-        "3",
-        "8d72",
-        "4d04"
+        "2"
       ],
-      "$rendered_parent": 4,
+      "$rendered_parent": "1",
       "$level": 1,
-      "$local_index": 0,
+      "$local_index": 3,
       "$open": false,
       "$expanded_branch": true,
       "$resourceAssignments": [],
@@ -139,82 +99,338 @@
     },
     {
       "id": "6",
-      "text": "Task #2",
-      "start_date": "2024-07-02 00:00",
-      "duration": 8,
-      "progress": 0.1171875,
-      "parent": 4,
+      "text": "Air conditioners installation",
+      "start_date": "19-08-2024",
+      "duration": "2",
+      "parent": "1",
+      "progress": 9
+    },
+    {
+      "id": "7",
+      "text": "Workplaces preparation",
+      "start_date": "21-08-2024",
+      "duration": "2",
+      "parent": "1",
+      "progress": 7
+    },
+    {
+      "id": "8",
+      "text": "Preparing workplaces for us",
+      "start_date": "22-07-2024",
+      "duration": "10",
+      "parent": "1"
+    },
+    {
+      "id": "9",
+      "text": "Workplaces importation",
+      "start_date": "22-08-2024 00:00",
+      "duration": 1,
+      "parent": "1",
       "end_date": "",
+      "progress": 0,
       "$no_start": false,
       "$no_end": false,
       "$rendered_type": "task",
       "$calculate_duration": true,
       "$effective_calendar": "global",
       "$source": [
-        "d050"
+        "9",
+        "10",
+        "11"
       ],
       "$target": [
-        "4",
-        "7f50"
+        "7",
+        "8",
+        "537d"
       ],
-      "$rendered_parent": 4,
+      "$rendered_parent": "1",
       "$level": 1,
-      "$local_index": 1,
+      "$local_index": 7,
       "$open": false,
       "$expanded_branch": true,
       "$resourceAssignments": [],
-      "$index": 5,
+      "$index": 8,
+      "open": true
+    },
+    {
+      "id": "10",
+      "text": "Analysis",
+      "open": true,
+      "type": "project"
+    },
+    {
+      "id": "11",
+      "text": "Documentation creation",
+      "start_date": "26-08-2024",
+      "duration": "14",
+      "parent": "10"
+    },
+    {
+      "id": "12",
+      "text": "Software design",
+      "start_date": "26-08-2024",
+      "duration": "10",
+      "parent": "10"
+    },
+    {
+      "id": "13",
+      "text": "Interface setup",
+      "start_date": "12-09-2024 00:00",
+      "duration": 1,
+      "parent": "10",
+      "end_date": "",
+      "progress": 0,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "14",
+        "15"
+      ],
+      "$target": [
+        "12",
+        "13"
+      ],
+      "$rendered_parent": "10",
+      "$level": 1,
+      "$local_index": 2,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 13,
+      "open": true
+    },
+    {
+      "id": "14",
+      "text": "Development",
+      "open": true,
+      "type": "project"
+    },
+    {
+      "id": "15",
+      "text": "Develop System",
+      "start_date": "16-09-2024",
+      "duration": "5",
+      "parent": "14"
+    },
+    {
+      "id": "16",
+      "text": "Integrate System",
+      "start_date": "16-09-2024",
+      "duration": "15",
+      "parent": "14"
+    },
+    {
+      "id": "17",
+      "text": "Test",
+      "start_date": "05-10-2024 00:00",
+      "duration": 1,
+      "parent": "14",
+      "end_date": "",
+      "progress": 0,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [],
+      "$target": [
+        "16",
+        "17"
+      ],
+      "$rendered_parent": "14",
+      "$level": 1,
+      "$local_index": 2,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 17,
+      "open": true
+    },
+    {
+      "id": "1722393641038",
+      "start_date": "22-07-2024 00:00",
+      "text": "nithesh task",
+      "duration": 18,
+      "parent": "1",
+      "$resourceAssignments": [],
+      "$rendered_parent": "1",
+      "$level": 1,
+      "end_date": "",
+      "progress": 0.24739583333333334,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "537d"
+      ],
+      "$target": [],
+      "$expanded_branch": true,
+      "$index": 9,
+      "$local_index": 8,
+      "open": true,
+      "$open": true
+    },
+    {
+      "id": "1722394001568",
+      "start_date": "22-07-2024 00:00",
+      "text": "New task",
+      "duration": 5,
+      "parent": "1722394001563",
+      "$resourceAssignments": [],
+      "$rendered_parent": "1722394001563",
+      "$level": 1,
+      "end_date": "",
+      "progress": 0,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [],
+      "$target": [],
+      "$expanded_branch": true,
+      "$index": 19,
+      "$local_index": 0,
+      "open": true,
+      "$open": true
+    },
+    {
+      "id": "1722394325494",
+      "start_date": "22-07-2024 00:00",
+      "text": "New task",
+      "duration": 5,
+      "parent": "1722394001563",
+      "$resourceAssignments": [],
+      "$rendered_parent": "1722394001563",
+      "$level": 1,
+      "end_date": "",
+      "progress": 0,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [],
+      "$target": [],
+      "$expanded_branch": true,
+      "$index": 20,
+      "$local_index": 1,
       "open": true
     }
   ],
   "links": [
     {
       "id": "1",
-      "source": 1,
-      "target": 2,
-      "type": "1"
+      "source": "3",
+      "target": "4",
+      "type": "0"
     },
     {
       "id": "2",
-      "source": 2,
-      "target": 3,
+      "source": "3",
+      "target": "5",
       "type": "0"
     },
     {
       "id": "3",
-      "source": 4,
-      "target": 5,
+      "source": "2",
+      "target": "6",
       "type": "0"
     },
     {
       "id": "4",
-      "source": 5,
-      "target": 6,
-      "type": "0"
-    },
-    {
-      "id": "d050",
-      "source": "6",
-      "target": "1721835727001",
-      "type": "1"
-    },
-    {
-      "id": "8d72",
-      "source": "1721835727001",
-      "target": "5",
-      "type": "0"
-    },
-    {
-      "id": "7f50",
-      "source": "1721988318585",
-      "target": "6",
-      "type": "2"
-    },
-    {
-      "id": "4d04",
       "source": "4",
-      "target": "5",
+      "target": "6",
       "type": "0"
+    },
+    {
+      "id": "5",
+      "source": "5",
+      "target": "6",
+      "type": "0"
+    },
+    {
+      "id": "6",
+      "source": "6",
+      "target": "7",
+      "type": "0"
+    },
+    {
+      "id": "7",
+      "source": "7",
+      "target": "9",
+      "type": "0"
+    },
+    {
+      "id": "8",
+      "source": "8",
+      "target": "9",
+      "type": "0"
+    },
+    {
+      "id": "9",
+      "source": "9",
+      "target": "10",
+      "type": "0"
+    },
+    {
+      "id": "10",
+      "source": "9",
+      "target": "11",
+      "type": "0"
+    },
+    {
+      "id": "11",
+      "source": "9",
+      "target": "12",
+      "type": "0"
+    },
+    {
+      "id": "12",
+      "source": "11",
+      "target": "13",
+      "type": "0"
+    },
+    {
+      "id": "13",
+      "source": "12",
+      "target": "13",
+      "type": "0"
+    },
+    {
+      "id": "14",
+      "source": "13",
+      "target": "14",
+      "type": "0"
+    },
+    {
+      "id": "15",
+      "source": "13",
+      "target": "15",
+      "type": "0"
+    },
+    {
+      "id": "16",
+      "source": "15",
+      "target": "17",
+      "type": "0"
+    },
+    {
+      "id": "17",
+      "source": "16",
+      "target": "17",
+      "type": "0"
+    },
+    {
+      "id": "537d",
+      "source": "1722393641038",
+      "target": "9",
+      "type": "2"
     }
   ]
 }

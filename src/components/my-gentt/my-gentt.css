@@ -1,13 +1,13 @@
 @import '~dhtmlx-gantt/codebase/dhtmlxgantt.css';
 
 
-#skeleton_loader {
+/* #skeleton_loader {
     width: 100%;
     height: 500px;
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
-  }
+  } */
   
 
   /* :host([successColor]) .gantt_task_line {
@@ -47,37 +47,28 @@
   
 
 
-  .task-yellow  {
-    background-color: rgb(180, 180, 101) !important;
-    border-color: yellow !important;
-  }
-  .task-red  {
-    background-color: rgb(180, 101, 101) !important;
-    border-color: rgb(255, 51, 0) !important;
+
+  :host {
+    display: block;
   }
   
-  .task-green  {
-    background-color: rgb(109, 180, 101) !important;
-    border-color: green !important;
+  html, body {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
   }
+  
+  .gantt_task_cell.week_end {
+    background-color: #EFF5FD;
+  }
+  
+  .gantt_selected .gantt_task_cell.week_end {
+    background-color: #f0e493;
+  }
+  
 
 
-  
-  .task-yellow-progress  {
-    background-color: yellow !important;
-    border-color: yellow !important;
-  }
-  
-  .task-red-progress  {
-    background-color: rgb(255, 0, 0) !important;
-    border-color: rgb(255, 0, 0) !important;
-  }
-  
-  .task-green-progress  {
-    background-color:green !important;
-    border-color: green !important;
-  }
-  
   .gantt_control {
     /* display: flex;
     flex-direction: column; */
@@ -86,7 +77,7 @@
     text-align: center;
   }
   
-  .gantt_control input[type="button"] {
+  .gantt_control input[type="button"], button {
     font: 500 14px Roboto;
     border: 1px solid #D9D9D9;
     border-radius: 2px;
@@ -107,7 +98,6 @@
     font:  16px  "Roboto", Arial, sans-serif;
     margin-right: 20px;
   }
-  
   
   
   @keyframes loading {

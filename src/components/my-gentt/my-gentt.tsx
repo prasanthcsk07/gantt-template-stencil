@@ -79,39 +79,54 @@ export class MyGentt {
     const day = String(date.getDate()).padStart(2, '0');
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+    // return `${year}-${month}-${day} ${hours}:${minutes}`;
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
   }
 
-  applyTaskStyles() {
-    const tasks = gantt.getTaskByTime(); // Get all tasks
-    tasks.forEach((task) => {
-      const taskElement = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress_wrapper`);
-      const taskElement2 = this.el.shadowRoot.querySelector(`[data-task-id='${task.id}'] .gantt_task_progress`);
-      if (taskElement) {
-        if (task.progress < 0.5 && task.progress > 0.2) {
-          taskElement.classList.add('task-yellow');
-          taskElement2.classList.add('task-yellow-progress');
-        } else if (task.progress > 0.5) {
-          taskElement.classList.add('task-green');
-          taskElement2.classList.add('task-green-progress');
-        } else if (task.progress < 0.2) {
-          taskElement.classList.add('task-red');
-          taskElement2.classList.add('task-red-progress');
-        }
-      }
-    });
-  }
 
   componentDidLoad() {
+    gantt.config.highlight_critical_path = true;
+    const ganttContainer = this.el.shadowRoot.querySelector('#gantt_here') as HTMLElement;
+
+   
     gantt.plugins({
       quick_info: true,
       tooltip: true,
       critical_path: true,
-      fullscreen: true // Ensure fullscreen plugin is activated
+      fullscreen: true 
     });
 
-    gantt.config.xml_date = "%Y-%m-%d %H:%i";
-    gantt.init(this.el.shadowRoot.querySelector('#gantt_here'));
+    function updateCriticalPath(toggle: HTMLButtonElement) {
+      toggle.dataset.enabled = toggle.dataset.enabled === 'true' ? 'false' : 'true';
+      const isEnabled = toggle.dataset.enabled === 'true';
+      toggle.innerHTML = isEnabled ? 'Hide Critical Path' : 'Show Critical Path';
+      gantt.config.highlight_critical_path = isEnabled;
+
+      gantt.render();
+    }
+
+    (this.el.shadowRoot.querySelector('.gantt_control button') as HTMLButtonElement).onclick = function (e) {
+      e.preventDefault();
+      updateCriticalPath(this as HTMLButtonElement);
+    };
+
+    
+    gantt.config.work_time = true;
+    gantt.config.details_on_create = false;
+    gantt.config.duration_unit = 'day';
+    gantt.config.row_height = 30;
+    gantt.config.min_column_width = 40;
+
+    gantt.templates.timeline_cell_class = function (task, date) {
+      if (!gantt.isWorkTime(date)) return 'week_end';
+      return '';
+    };
+
+    gantt.init(ganttContainer);
+
+
+
+
 
     interface ChartData {
       // Define the structure of your chart data
@@ -130,7 +145,6 @@ export class MyGentt {
 
     this.isLoading = true;
 
-
     axios.get<LinksData>("http://localhost:8000/links")
     .then(response => response.data)
     .then(res => {
@@ -146,125 +160,109 @@ export class MyGentt {
         task.data = res;
         gantt.parse(task);
         this.isLoading = false;
-        this.applyTaskStyles();
       })
       .catch(error => {
         console.error('Error fetching chart:', error);
-        this.isLoading = false;
       });
 
-   
 
-    gantt.attachEvent("onAfterTaskAdd", (id, task) => {
-      let newData = { ...task, end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) };
-      axios.post("http://localhost:8000/chart", newData)
-        .then(() => {
-          console.log("Successfully posted data");
-          this.applyTaskStyles();
-        })
-        .catch(err => console.log("Error in post", err));
-    });
+      gantt.attachEvent("onAfterTaskAdd", (id, task) => {
+        let newData = { ...task, end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id), type:task.parent == 0 ? "project" : "" };
+        axios.post("http://localhost:8000/chart", newData)
+          .then(() => {
+            console.log("Successfully posted data");
+          })
+          .catch(err => console.log("Error in post", err));
+      });
+  
+      gantt.attachEvent("onAfterTaskUpdate", (id, task) => {
+        let newData = { ...task, end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) };
+        axios.put(`http://localhost:8000/chart/${id}`, newData)
+          .then(() => {
+            console.log(id, "Data successfully updated");
+          })
+          .catch(err => console.log("Error", err));
+      });
+  
+      gantt.attachEvent("onAfterTaskDelete", (id) => {
+        axios.delete(`http://localhost:8000/chart/${id}`)
+          .then(() => {
+            console.log(`${id} - Deleted successfully`);
+          })
+          .catch(err => console.log("Error", err));
+      });
+  
+      gantt.attachEvent("onLinkCreated", (link) => {
+        axios.post("http://localhost:8000/links", link)
+          .then(() => console.log('Link created:', link))
+          .catch(err => console.log("Error in post link", err));
+        return true; // Return true to confirm the link creation
+      });
+  
+      gantt.attachEvent('onAfterLinkDelete', (id, link) => {
+        axios.delete(`http://localhost:8000/links/${id}`)
+          .then(() => console.log(`${id} - Deleted link successfully`))
+          .catch(err => console.log("Error", err));
+        return true; // Return true to confirm the link deletion
+      });
 
-    gantt.attachEvent("onAfterTaskUpdate", (id, task) => {
-      let newData = { ...task, end_date: "", start_date: this.formatDate(task.start_date), open: true, id: String(id) };
-      axios.put(`http://localhost:8000/chart/${id}`, newData)
-        .then(() => {
-          console.log(id, "Data successfully updated");
-          this.applyTaskStyles();
-        })
-        .catch(err => console.log("Error", err));
-    });
 
-    gantt.attachEvent("onAfterTaskDelete", (id) => {
-      axios.delete(`http://localhost:8000/chart/${id}`)
-        .then(() => {
-          console.log(`${id} - Deleted successfully`);
-          this.applyTaskStyles();
-        })
-        .catch(err => console.log("Error", err));
-    });
 
-    gantt.attachEvent("onLinkCreated", (link) => {
-      axios.post("http://localhost:8000/links", link)
-        .then(() => console.log('Link created:', link))
-        .catch(err => console.log("Error in post link", err));
-      return true; // Return true to confirm the link creation
-    });
+      document.addEventListener("fullscreenchange", () => {
+        const icon = gantt.toggleIcon;
+        if (document.fullscreenElement) {
+          if (icon) icon.className = icon.className.replace("fa-expand", "fa-compress");
+        } else {
+          if (icon) icon.className = icon.className.replace("fa-compress", "fa-expand");
+        }
+      });
 
-    gantt.attachEvent('onAfterLinkDelete', (id, link) => {
-      axios.delete(`http://localhost:8000/links/${id}`)
-        .then(() => console.log(`${id} - Deleted link successfully`))
-        .catch(err => console.log("Error", err));
-      return true; // Return true to confirm the link deletion
-    });
 
-    gantt.attachEvent("onTemplatesReady", () => {
-      const toggle = document.getElementById("i");
+      gantt.attachEvent("onTemplatesReady", () => {
+        const toggle = document.getElementById("img");
+        toggle.className = "fa fa-expand gantt-fullscreen";
+        gantt.toggleIcon = toggle;
+        this.el.shadowRoot.appendChild(toggle);
+        toggle.onclick = () => {
+          gantt.ext.fullscreen.toggle();
+        };
+      });
+  
+      gantt.attachEvent("onExpand", () => {
+        const icon = gantt.toggleIcon;
+        if (icon) {
+          icon.className = icon.className.replace("fa-expand", "fa-compress");
+        }
+      });
+  
+      gantt.attachEvent("onCollapse", () => {
+        const icon = gantt.toggleIcon;
+        if (icon) {
+          icon.className = icon.className.replace("fa-compress", "fa-expand");
+        }
+      });
+  
+      const toggle = document.createElement("img");
       toggle.className = "fa fa-expand gantt-fullscreen";
+      toggle.src = "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-fullscreen-vector-icon-png-image_702532.jpg";
+      toggle.style.height = "50px";
+      toggle.style.marginTop = "-20rem";
+
       gantt.toggleIcon = toggle;
       this.el.shadowRoot.appendChild(toggle);
       toggle.onclick = () => {
-        gantt.ext.fullscreen.toggle();
-      };
-    });
-
-    gantt.attachEvent("onExpand", () => {
-      const icon = gantt.toggleIcon;
-      if (icon) {
-        icon.className = icon.className.replace("fa-expand", "fa-compress");
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          this.el.shadowRoot.querySelector('#gantt_here').requestFullscreen();
+        }
       }
-    });
-
-    gantt.attachEvent("onCollapse", () => {
-      const icon = gantt.toggleIcon;
-      if (icon) {
-        icon.className = icon.className.replace("fa-compress", "fa-expand");
-      }
-    });
-
-    // gantt.attachEvent("onTemplatesReady", () => {
-    //   console.log("onTemplatesReady")
-    //   const toggle = document.createElement("i");
-    //   toggle.className = "fa fa-expand gantt-fullscreen";
-    //   gantt.toggleIcon = toggle;
-    //   this.el.shadowRoot.appendChild(toggle);
-    //   toggle.onclick = () => {
-    //     if (document.fullscreenElement) {
-    //       document.exitFullscreen();
-    //     } else {
-    //       this.el.shadowRoot.querySelector('#gantt_here').requestFullscreen();
-    //     }
-    //   };
-    // });
-
-    document.addEventListener("fullscreenchange", () => {
-      const icon = gantt.toggleIcon;
-      if (document.fullscreenElement) {
-        if (icon) icon.className = icon.className.replace("fa-expand", "fa-compress");
-      } else {
-        if (icon) icon.className = icon.className.replace("fa-compress", "fa-expand");
-      }
-    });
+  
 
 
-    const toggle = document.createElement("img");
-    toggle.className = "fa fa-expand gantt-fullscreen";
-    toggle.src = "https://png.pngtree.com/png-vector/20190225/ourmid/pngtree-fullscreen-vector-icon-png-image_702532.jpg";
-    toggle.style.height = "50px"
-    gantt.toggleIcon = toggle;
-    this.el.shadowRoot.appendChild(toggle);
-    toggle.onclick = () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-        this.applyTaskStyles();
-      } else {
-        this.el.shadowRoot.querySelector('#gantt_here').requestFullscreen();
-        this.applyTaskStyles();
-      }
-    };
 
-
-    gantt.ext.zoom.init(this.zoomConfig);
+      // Zoom plugin
+      gantt.ext.zoom.init(this.zoomConfig);
     gantt.ext.zoom.setLevel('day');
     gantt.ext.zoom.attachEvent('onAfterZoom', (level, config) => {
       const radio: any = this.el.shadowRoot.querySelector(`.gantt_radio[value='${config.name}']`);
@@ -274,30 +272,29 @@ export class MyGentt {
     });
 
     gantt.init(this.el.shadowRoot.querySelector('#gantt_here'), new Date(2022, 8, 1), new Date(2023, 10, 1));
+
   }
 
 
   zoomIn() {
     gantt.ext.zoom.zoomIn();
-    this.applyTaskStyles();
   }
 
   zoomOut() {
     gantt.ext.zoom.zoomOut();
-    this.applyTaskStyles();
   }
 
   setZoomLevel(event) {
     gantt.ext.zoom.setLevel(event.target.value);
-    this.applyTaskStyles();
   }
 
   render() {
     return (
       <div>
-        <form class="gantt_control">
+       <form class="gantt_control">
           <input type="button" value="Zoom In" onClick={() => this.zoomIn()} />
           <input type="button" value="Zoom Out" onClick={() => this.zoomOut()} />
+          <button>Show Critical Path</button>
           <input type="radio" id="scale1" class="gantt_radio" name="scale" value="day" onClick={(event) => this.setZoomLevel(event)} />
           <label htmlFor="scale1">Day scale</label>
           <input type="radio" id="scale2" class="gantt_radio" name="scale" value="week" onClick={(event) => this.setZoomLevel(event)} />
@@ -309,9 +306,11 @@ export class MyGentt {
           <input type="radio" id="scale5" class="gantt_radio" name="scale" value="year" onClick={(event) => this.setZoomLevel(event)} />
           <label htmlFor="scale5">Year scale</label>
         </form>
+        
+        <div id="gantt_here" style={{ width: '100%', height: 'calc(80vh - 24px)' }}></div>
         <div style={{ position: "relative" }}>
-          {this.isLoading && <div style={{ position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "100%", zIndex: "999" }} id="skeleton_loader"></div>}
-          <div id="gantt_here" style={{ width: '100%', height: '500px' }}></div>
+          {this.isLoading && <div style={{ position: "absolute", top: "0", left: "0", right: "0", bottom: "0", width: "100%", height: "calc(80vh - 52px)", zIndex: "999" }} id="skeleton_loader"></div>}
+          <div id="gantt_here" style={{ width: '100%', height: 'calc(-24px + 15vh)' }}></div>
         </div>
       </div>
     );
