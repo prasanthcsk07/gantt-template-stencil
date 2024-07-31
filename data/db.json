@@ -116,9 +116,28 @@
     {
       "id": "8",
       "text": "Preparing workplaces for us",
-      "start_date": "22-07-2024",
-      "duration": "10",
-      "parent": "1"
+      "start_date": "22-07-2024 00:00",
+      "duration": 10,
+      "parent": "1",
+      "end_date": "",
+      "progress": 0.14375,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "8"
+      ],
+      "$target": [],
+      "$rendered_parent": "1",
+      "$level": 1,
+      "$local_index": 6,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 7,
+      "open": true
     },
     {
       "id": "9",
@@ -161,9 +180,30 @@
     {
       "id": "11",
       "text": "Documentation creation",
-      "start_date": "26-08-2024",
-      "duration": "14",
-      "parent": "10"
+      "start_date": "26-08-2024 00:00",
+      "duration": 12,
+      "parent": "10",
+      "end_date": "",
+      "progress": 0,
+      "$no_start": false,
+      "$no_end": false,
+      "$rendered_type": "task",
+      "$calculate_duration": true,
+      "$effective_calendar": "global",
+      "$source": [
+        "12"
+      ],
+      "$target": [
+        "10"
+      ],
+      "$rendered_parent": "10",
+      "$level": 1,
+      "$local_index": 0,
+      "$open": false,
+      "$expanded_branch": true,
+      "$resourceAssignments": [],
+      "$index": 11,
+      "open": true
     },
     {
       "id": "12",
@@ -175,7 +215,7 @@
     {
       "id": "13",
       "text": "Interface setup",
-      "start_date": "12-09-2024 00:00",
+      "start_date": "11-09-2024 00:00",
       "duration": 1,
       "parent": "10",
       "end_date": "",
