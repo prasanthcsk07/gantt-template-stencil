@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface GanttControl {
     }
-    interface MyGentt {
+    interface MyGantt {
     }
 }
 export interface GanttControlCustomEvent<T> extends CustomEvent<T> {
@@ -36,15 +36,15 @@ declare global {
         prototype: HTMLGanttControlElement;
         new (): HTMLGanttControlElement;
     };
-    interface HTMLMyGenttElement extends Components.MyGentt, HTMLStencilElement {
+    interface HTMLMyGanttElement extends Components.MyGantt, HTMLStencilElement {
     }
-    var HTMLMyGenttElement: {
-        prototype: HTMLMyGenttElement;
-        new (): HTMLMyGenttElement;
+    var HTMLMyGanttElement: {
+        prototype: HTMLMyGanttElement;
+        new (): HTMLMyGanttElement;
     };
     interface HTMLElementTagNameMap {
         "gantt-control": HTMLGanttControlElement;
-        "my-gentt": HTMLMyGenttElement;
+        "my-gantt": HTMLMyGanttElement;
     }
 }
 declare namespace LocalJSX {
@@ -54,11 +54,11 @@ declare namespace LocalJSX {
         "onZoomIn"?: (event: GanttControlCustomEvent<void>) => void;
         "onZoomOut"?: (event: GanttControlCustomEvent<void>) => void;
     }
-    interface MyGentt {
+    interface MyGantt {
     }
     interface IntrinsicElements {
         "gantt-control": GanttControl;
-        "my-gentt": MyGentt;
+        "my-gantt": MyGantt;
     }
 }
 export { LocalJSX as JSX };
@@ -66,7 +66,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "gantt-control": LocalJSX.GanttControl & JSXBase.HTMLAttributes<HTMLGanttControlElement>;
-            "my-gentt": LocalJSX.MyGentt & JSXBase.HTMLAttributes<HTMLMyGenttElement>;
+            "my-gantt": LocalJSX.MyGantt & JSXBase.HTMLAttributes<HTMLMyGanttElement>;
         }
     }
 }
