@@ -1,4 +1,4 @@
-import { formatDate } from './formatDate';
+import { formatDate } from '../events/formatDate';
 import { postTaskData, updateTaskData, deleteTaskData, postLinkData, deleteLinkData } from '../api/apiService';
 
 export function setupGanttEvents(gantt: any) {

@@ -1,7 +1,7 @@
 import { Component, h, Element, State, Listen } from '@stencil/core';
 import 'dhtmlx-gantt';
-import { setGanttPlugins } from './setGanttPlugins';
-import { ZoomConfigData } from './zoomConfigData';
+import { setGanttPlugins } from './plugins/setGanttPlugins';
+import { ZoomConfigData } from './events/zoomConfigData';
 import { fetchChartData, fetchLinksData, Task } from './api/apiService';
 import { setupGanttEvents } from './events/ganttEvents';
 import { initializeZoomPlugin, zoomIn, zoomOut, setZoomLevel } from './events/zoomEvents';
@@ -31,7 +31,7 @@ export class MyGantt {
 
     gantt.config.auto_scheduling = true;
 	gantt.config.auto_scheduling_strict = true;
-  
+
     const ganttContainer = this.el.shadowRoot.querySelector('#gantt_here') as HTMLElement;
 
     setGanttPlugins(gantt);
