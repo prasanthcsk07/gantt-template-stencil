@@ -128,7 +128,7 @@ export class MyGantt {
 
   @Listen('toggleCriticalPath')
   handleToggleCriticalPath() {
-    const button = this.el.shadowRoot.querySelector('.gantt_control button') as HTMLButtonElement;
+    const button = this.el.shadowRoot.querySelector('gantt-control').shadowRoot.querySelector('.gantt_control button') as HTMLButtonElement;
     if (button) {
       button.dataset.enabled = button.dataset.enabled === 'true' ? 'false' : 'true';
       const isEnabled = button.dataset.enabled === 'true';
