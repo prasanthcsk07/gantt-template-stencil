@@ -8,45 +8,6 @@
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
   } */
-  
-
-  /* :host([successColor]) .gantt_task_line {
-    background-color: rgb(156, 216, 169) !important;
-  }
-
-  :host([successColor]) .gantt_task_progress {
-    background-color: rgb(66, 167, 7) !important;
-  }
-  
-
-  :host([dangerColor]) .gantt_task_line {
-    background-color: rgb(216, 156, 156) !important;
-  }
-
-  :host([dangerColor]) .gantt_task_progress {
-    background-color: rgb(167, 47, 7) !important;
-  }
-  :host([primaryColor]) .gantt_task_line {
-    background-color: rgb(216, 214, 156) !important;
-  }
-
-  :host([primaryColor]) .gantt_task_progress {
-    background-color: rgb(162, 167, 7) !important;
-  } */
-
-
-  /* .task-yellow .gantt_task_line {
-    background-color: yellow !important;
-    border-color: yellow !important;
-  }
-  
-  .task-green .gantt_task_line {
-    background-color: green !important;
-    border-color: green !important;
-  } */
-  
-
-
 
   :host {
     display: block;
@@ -65,6 +26,56 @@
   
   .gantt_selected .gantt_task_cell.week_end {
     background-color: #f0e493;
+  }
+
+
+
+
+  /* Gantt plugin scheduleFormProjectStart and Constrains */
+  .weekend {
+    background: #f4f7f4 !important;
+  }
+
+  [data-column-name='constraint_type'] .gantt_tree_content {
+    padding: 1px;
+    line-height: 17px;
+    white-space: normal;
+    text-align: right;
+    box-sizing: border-box;
+  }
+
+  .gantt_grid_editor_placeholder[data-column-name='constraint_type'] select {
+    line-height: 20px;
+    white-space: normal;
+  }
+
+  .constraint-marker {
+    position: absolute;
+
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 56px;
+    height: 56px;
+    margin-top: -11px;
+
+    opacity: 0.4;
+    z-index: 1;
+    background: url("https://w7.pngwing.com/pngs/247/15/png-transparent-arrow-arrow-angle-triangle-black-thumbnail.png") center no-repeat;
+    background-size: cover;
+  }
+
+  .constraint-marker.earliest-start {
+    margin-left: -53px;
+  }
+
+  .constraint-marker.latest-end {
+    margin-left: -3px;
+    transform: rotate(180deg);
+  }
+
+  .gantt_link_control {
+    z-index: 1;
   }
   
 

@@ -6,7 +6,8 @@ export function setGanttPlugins(gantt) {
       critical_path: true,
       fullscreen: true,
       multiselect: true,
-      auto_scheduling: true
+      auto_scheduling: true,
+			marker: true
     });
   }
   

@@ -5,7 +5,8 @@ import { ZoomConfigData } from './events/zoomConfigData';
 import { fetchChartData, fetchLinksData, Task } from './api/apiService';
 import { setupGanttEvents } from './events/ganttEvents';
 import { initializeZoomPlugin, zoomIn, zoomOut, setZoomLevel } from './events/zoomEvents';
-import { setupAutoschedule } from './events/setupAutoschedule';
+// import { setupAutoschedule } from './events/setupAutoschedule';
+import { projectStartAndConstraintsAndAutoschedule } from './events/schedule_from_project_start&constraints&autoschedule';
 
 declare const gantt: any;
 
@@ -31,12 +32,13 @@ export class MyGantt {
     const ganttContainer = this.el.shadowRoot.querySelector('#gantt_here') as HTMLElement;
 
     setGanttPlugins(gantt);
-    setupAutoschedule(gantt);
+    // setupAutoschedule(gantt); // gantt project start and constraints inbuild having autoschedule
+    projectStartAndConstraintsAndAutoschedule(gantt)
 
     gantt.config.work_time = true;
     gantt.config.details_on_create = false;
     gantt.config.duration_unit = 'day';
-    gantt.config.row_height = 30;
+    gantt.config.row_height = 35;
     gantt.config.min_column_width = 40;
 
     gantt.templates.timeline_cell_class = (task, date) => {

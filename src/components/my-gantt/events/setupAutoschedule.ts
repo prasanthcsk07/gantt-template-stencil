@@ -21,6 +21,8 @@ export function setupAutoschedule(gantt){
 
 
     
+
+    
   gantt.attachEvent("onBeforeAutoSchedule", function () {
     gantt.message("Recalculating project schedule...");
     return true;
