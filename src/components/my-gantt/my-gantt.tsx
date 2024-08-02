@@ -7,6 +7,7 @@ import { setupGanttEvents } from './events/ganttEvents';
 import { initializeZoomPlugin, zoomIn, zoomOut, setZoomLevel } from './events/zoomEvents';
 // import { setupAutoschedule } from './events/setupAutoschedule';
 import { projectStartAndConstraintsAndAutoschedule } from './events/schedule_from_project_start&constraints&autoschedule';
+import { projectEndAndAutoschedule } from './events/schedule_from_project_end&autoschedule';
 
 declare const gantt: any;
 
@@ -34,6 +35,7 @@ export class MyGantt {
     setGanttPlugins(gantt);
     // setupAutoschedule(gantt); // gantt project start and constraints inbuild having autoschedule
     projectStartAndConstraintsAndAutoschedule(gantt)
+    // projectEndAndAutoschedule(gantt);
 
     gantt.config.work_time = true;
     gantt.config.details_on_create = false;

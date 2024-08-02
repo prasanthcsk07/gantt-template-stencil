@@ -19,7 +19,7 @@ export function setupAutoschedule(gantt){
       // gantt.config.start_date = new Date(2023, 3, 1);
       // gantt.config.end_date = new Date(2023, 5, 1);
 
-
+    
     
 
     
@@ -31,7 +31,7 @@ gantt.attachEvent("onAfterTaskAutoSchedule", function (task, new_date, constrain
     if(task && predecessor){
         gantt.message({
             text: "<b>" + task.text + "</b> has been rescheduled to " + gantt.templates.task_date(new_date) + " due to <b>" + predecessor.text + "</b> constraint",
-            expire: 4000
+            expire: 3000
         });
     }
 });

@@ -1,33 +1,31 @@
-export function projectStartAndConstraintsAndAutoschedule(gantt){
-
+export function projectEndAndAutoschedule(gantt){
     gantt.templates.scale_cell_class = function (date) {
-        if (date.getDay() == 0 || date.getDay() == 6) {
+        if (!gantt.isWorkTime(date)) {
             return "weekend";
         }
     };
     gantt.templates.timeline_cell_class = function (item, date) {
-        if (date.getDay() == 0 || date.getDay() == 6) {
+        if (!gantt.isWorkTime(date)) {
             return "weekend";
         }
     };
 
     gantt.config.work_time = true;
-		gantt.config.min_column_width = 45;
-		gantt.config.auto_scheduling = true;
 
-		gantt.config.schedule_from_end = false;
-		gantt.config.project_start = new Date(2024, 2, 1);
+    gantt.config.auto_scheduling = true;
+    gantt.config.auto_scheduling_strict = true;
 
 
-	
+    gantt.config.schedule_from_end = true;
+    gantt.config.project_end = new Date(2024, 4, 15);
+    gantt.addMarker({
+        start_date: gantt.config.project_end,
+        text: "project end"
+    });
 
-    gantt.config.auto_scheduling_project_constraint = true;
-    if (gantt.addMarker) {
-        gantt.addMarker({
-            start_date: gantt.config.project_start,
-            text: "project start"
-        });
-    }
+    gantt.config.date_format = "%d-%m-%Y";
+
+    gantt.config.fit_tasks = true;
 
     var textEditor = { type: "text", map_to: "text" };
     var dateEditor = { type: "date", map_to: "start_date", min: new Date(2023, 0, 1), max: new Date(2025, 0, 1) };
@@ -68,9 +66,7 @@ export function projectStartAndConstraintsAndAutoschedule(gantt){
         { name: "add", width: 44 }
     ];
 
-
     function renderDiv(task, date, className) {
-        console.log(task, date, className,"renderDiv")
         var el = document.createElement('div');
         el.className = className;
         var sizes = gantt.getTaskPosition(task, date);
@@ -108,11 +104,6 @@ export function projectStartAndConstraintsAndAutoschedule(gantt){
         { name: "constraint", type: "constraint" },
         { name: "time", type: "duration", map_to: "auto" }
     ];
-    gantt.config.lightbox.project_sections = [
-        { name: "description", height: 38, map_to: "text", type: "textarea", focus: true },
-        { name: "constraint", type: "constraint" },
-        { name: "time", type: "duration", map_to: "auto" }
-    ];
 
     gantt.attachEvent("onAfterTaskAutoSchedule", function (task, new_date, link, predecessor) {
         var reason = "";
@@ -122,15 +113,9 @@ export function projectStartAndConstraintsAndAutoschedule(gantt){
             var constraint = gantt.getConstraintType(task);
             reason = gantt.locale.labels[constraint];
         }
-
-        if(task && predecessor){
-            gantt.message({
-                text: "<b>" + task.text + "</b> has been rescheduled to " + gantt.templates.task_date(new_date) + " due to <b>" + predecessor.text + "</b> constraint",
-                expire: 4000
-            });
-        }
         var predecessor = predecessor ? predecessor : { text: task.constraint_type };
         console.log("<b>" + task.text + "</b> has been rescheduled to " + gantt.templates.task_date(new_date) + " due to <b>" + reason + "</b> constraint");
     });
-    // gantt.message({ text: "Project is scheduled as soon as possible starting from the project start date", expire: -1 });
+
+    gantt.message({ text: "Project is scheduled as late as possible from the project end date", expire: -1 });
 }
