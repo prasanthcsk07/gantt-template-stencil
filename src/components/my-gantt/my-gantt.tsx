@@ -5,6 +5,7 @@ import { ZoomConfigData } from './events/zoomConfigData';
 import { fetchChartData, fetchLinksData, Task } from './api/apiService';
 import { setupGanttEvents } from './events/ganttEvents';
 import { initializeZoomPlugin, zoomIn, zoomOut, setZoomLevel } from './events/zoomEvents';
+import { setupAutoschedule } from './events/setupAutoschedule';
 
 declare const gantt: any;
 
@@ -30,6 +31,7 @@ export class MyGantt {
     const ganttContainer = this.el.shadowRoot.querySelector('#gantt_here') as HTMLElement;
 
     setGanttPlugins(gantt);
+    setupAutoschedule(gantt);
 
     gantt.config.work_time = true;
     gantt.config.details_on_create = false;
