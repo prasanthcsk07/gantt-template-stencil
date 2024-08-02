@@ -81,15 +81,17 @@ export class MyGantt {
       toggle.onclick = () => gantt.ext.fullscreen.toggle();
     });
 
-    gantt.attachEvent("onExpand", () => {
-      const icon = gantt.toggleIcon;
-      if (icon) icon.className = icon.className.replace("fa-expand", "fa-compress");
-    });
+    // gantt.attachEvent("onExpand", () => {
+    //   console.log('onExpand')
+    //   const icon = gantt.toggleIcon;
+    //   if (icon) icon.className = icon.className.replace("fa-expand", "fa-compress");
+    // });
 
-    gantt.attachEvent("onCollapse", () => {
-      const icon = gantt.toggleIcon;
-      if (icon) icon.className = icon.className.replace("fa-compress", "fa-expand");
-    });
+    // gantt.attachEvent("onCollapse", () => {
+    //   console.log("onCollapse")
+    //   const icon = gantt.toggleIcon;
+    //   if (icon) icon.className = icon.className.replace("fa-compress", "fa-expand");
+    // });
 
     const toggle = document.createElement("img");
     toggle.className = "fa fa-expand gantt-fullscreen";
